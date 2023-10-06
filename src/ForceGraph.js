@@ -93,9 +93,18 @@ export default function ForceGraph({ selected, setSelected, setSLink }) {
             return
         }
         if (isClicked) {
-            if (link.source.id === selected.id || link.target.id === selected.id) {
+            if (link.source.id === selected.id) {
                 selectedLinks.clear();
-                setSLink(link.index)
+                setSLink(link.target.id)
+
+                if (link) {
+                    selectedLinks.add(link);
+                }
+
+                updateHighlight();
+            } else if (link.target.id === selected.id) {
+                selectedLinks.clear();
+                setSLink(link.source.id)
 
                 if (link) {
                     selectedLinks.add(link);

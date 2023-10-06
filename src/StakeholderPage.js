@@ -28,7 +28,8 @@ export default function StakeholderPage() {
                     <List>
                         {selected.neighbors.map((neighbor, index) => (
                             <ListItem key={index}>
-                                - Node {neighbor.id} {neighbor.id === sLink && sLink}
+                                - Node {neighbor.id} {neighbor.id === sLink && "hello"
+                                }
                             </ListItem>
                         ))}
                     </List>
