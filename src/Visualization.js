@@ -31,7 +31,7 @@ function getColor(value, selected) {
     const binNumber = Math.ceil(value / binSize);
 
     const colors = [RED, ORANGE, YELLOW, GREEN, BLUE,PURPLE];
-    return colors[(binNumber - 1)];
+    return colors[(binNumber -1)];
 }
 
 export default function Visualization({

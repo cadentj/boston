@@ -8,7 +8,9 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Paper from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import ForceGraph from './ForceGraph';
 
 const YEARS = [
     [1790.77, 1810.167],
@@ -54,17 +56,18 @@ function createItems(bounds, bins) {
     return items
 }
 
-export default function Page() {
-    const [selected, setSelected] = useState(2)
+export default function StakeholderPage() {
+    const [selected, setSelected] = useState(0)
 
-    const bounds = getNewBinBounds(selected)
-    const items = createItems(bounds, selected)
+    useEffect(() => {
+        console.log(selected)
+    }, [selected]);
 
     return (
         <div>
-            <Visualization selected={selected} />
+            <ForceGraph setSelected={setSelected}/>
             {/* <Box className="page" sx={{ position: 'absolute', top: 0, zIndex: 100 }}> */}
-            <Paper sx={{ m: 5, p: 3, position: 'absolute', bottom: 0 }}>
+            {/* <Paper sx={{ m: 5, p: 3, position: 'absolute', bottom: 0 }}>
                 <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">Bins</FormLabel>
                     <RadioGroup
@@ -80,23 +83,9 @@ export default function Page() {
                         <FormControlLabel value="6" control={<Radio />} label="6" />
                     </RadioGroup>
                 </FormControl>
-            </Paper>
-            <Paper sx={{ m: 5, p: 2, position: 'absolute', top: 0, right: 0 }}>
-                <Stack spacing={2}>
-                    {items.map((item, index) => (
-                        <Paper key={index} elevation={3} sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
-                            <Box
-                                sx={{
-                                    width: 16,
-                                    height: 16,
-                                    backgroundColor: item.color,
-                                    marginRight: 1,
-                                }}
-                            ></Box>
-                            <Typography>{item.year}</Typography>
-                        </Paper>
-                    ))}
-                </Stack>
+            </Paper> */}
+            <Paper sx={{ m: 5, p: 2, position: 'absolute', top: 0, left: 0 }}>
+                Stakeholder Map of Boston
             </Paper>
             {/* </Box> */}
         </div>
