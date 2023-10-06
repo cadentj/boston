@@ -1,93 +1,43 @@
-import Visualization from './Visualization';
-
-import { Typography, Box, Grid } from '@mui/material';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import Paper from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
+import Paper from '@mui/material/Paper';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 import ForceGraph from './ForceGraph';
 
-const YEARS = [
-    [1790.77, 1810.167],
-    [1810.167, 1829.333],
-    [1829.333, 1848.5],
-    [1848.5, 1867.667],
-    [1867.667, 1886.833],
-    [1886.833, 1906.0],
-    [1906.0, 1925.167],
-    [1925.167, 1944.333],
-    [1944.333, 1963.5],
-    [1963.5, 1982.667],
-    [1982.667, 2001.833],
-    [2001.833, 2021.0]
-].map(year => year.map(y => Math.round(y)));
-
-const RED = "#e6194B"
-const ORANGE = '#f58231'
-const YELLOW = '#ffe119'
-const GREEN = '#3cb44b'
-const BLUE = '#4363d8'
-const PURPLE = '#911eb4'
-
-const COLORS = [RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE];
-
-function getNewBinBounds(numBins) {
-    const totalEntries = YEARS.length;
-    const binSize = Math.ceil(totalEntries / numBins);
-    const newBins = [];
-
-    for (let i = 0; i < totalEntries; i += binSize) {
-        newBins.push([YEARS[i][0], YEARS[Math.min(i + binSize - 1, totalEntries - 1)][1]]);
-    }
-
-    return newBins;
-}
-
-function createItems(bounds, bins) {
-    const items = []
-    for (let i = 0; i < bounds.length; i++) {
-        items.push({ year: `${bounds[i][0]}-${bounds[i][1]}`, color: COLORS[i] })
-    }
-    return items
-}
 
 export default function StakeholderPage() {
-    const [selected, setSelected] = useState(0)
-
-    useEffect(() => {
-        console.log(selected)
-    }, [selected]);
+    const [selected, setSelected] = useState(null)
+    const [sLink, setSLink] = useState(null)
 
     return (
         <div>
-            <ForceGraph setSelected={setSelected}/>
-            {/* <Box className="page" sx={{ position: 'absolute', top: 0, zIndex: 100 }}> */}
-            {/* <Paper sx={{ m: 5, p: 3, position: 'absolute', bottom: 0 }}>
-                <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Bins</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        defaultValue="2"
-                        onChange={(event) => setSelected(event.target.value)}
-                    >
-                        <FormControlLabel value="2" control={<Radio />} label="2" />
-                        <FormControlLabel value="3" control={<Radio />} label="3" />
-                        <FormControlLabel value="4" control={<Radio />} label="4" />
-                        <FormControlLabel value="6" control={<Radio />} label="6" />
-                    </RadioGroup>
-                </FormControl>
-            </Paper> */}
+            <ForceGraph selected={selected} setSLink={setSLink} setSelected={setSelected}/>
+            {/* rewrite the below */}
+            {selected && (
+                <Paper sx={{ m: 5, p: 3, position: 'absolute', bottom: 0 }}>
+                    <Typography variant="h6">
+                        You have selected node {selected.id}.
+                    </Typography>
+                    <Typography>
+                        Click on a link to learn more.
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        This node's neighbors are:
+                    </Typography>
+                    <List>
+                        {selected.neighbors.map((neighbor, index) => (
+                            <ListItem key={index}>
+                                - Node {neighbor.id} {neighbor.id === sLink && sLink}
+                            </ListItem>
+                        ))}
+                    </List>
+                </Paper>
+            )}
+            {/* to here */}
             <Paper sx={{ m: 5, p: 2, position: 'absolute', top: 0, left: 0 }}>
                 Stakeholder Map of Boston
             </Paper>
-            {/* </Box> */}
         </div>
     );
 }

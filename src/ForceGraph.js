@@ -2,6 +2,7 @@ import React from "react";
 import { ForceGraph2D } from 'react-force-graph'
 import * as d3 from 'd3-force';
 import { useCallback, useMemo, useState } from "react";
+import SpriteText from "three-spritetext";
 
 
 function genRandomTree(N = 300, reverse = false) {
@@ -10,13 +11,14 @@ function genRandomTree(N = 300, reverse = false) {
         links: [...Array(N).keys()]
             .filter(id => id)
             .map(id => ({
+                'demo': 'test',
                 [reverse ? 'target' : 'source']: id,
                 [reverse ? 'source' : 'target']: Math.round(Math.random() * (id - 1))
             }))
     };
 }
 
-export default function ForceGraph({ setSelected }) {
+export default function ForceGraph({ selected, setSelected, setSLink }) {
     const NODE_R = 12;
 
     const data = useMemo(() => {
@@ -46,36 +48,30 @@ export default function ForceGraph({ setSelected }) {
     const [hoverNode, setHoverNode] = useState(null);
     const [clickedNode, setClickedNode] = useState(null);
     const [isClicked, setClicked] = useState(false)
+    const [selectedLinks, setSelectedLinks] = useState(new Set())
+
 
 
     const handleNodeClick = node => {
-        setSelected(node.id)
-        setClicked(true)
-        if (node) {
-            if (clickedNode === node) {
-                // Highlight the clicked node and its neighbors and links
-                highlightNodes.clear();
-                highlightLinks.clear();
-                highlightNodes.add(node);
-                node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
-                node.links.forEach(link => highlightLinks.add(link));
-                setClickedNode(node);
-            }
+        if (!isClicked) {
+            setSelected(node)
+            setClicked(true)
+        }
+        if (node && clickedNode === node) {
+            // Highlight the clicked node and its neighbors and links
+            highlightNodes.clear();
+            highlightLinks.clear();
+            highlightNodes.add(node);
+            node.neighbors.forEach(neighbor => highlightNodes.add(neighbor));
+            node.links.forEach(link => highlightLinks.add(link));
+            setClickedNode(node);
         }
 
         updateHighlight();
     };
 
-
-
-    const updateHighlight = () => {
-        setHighlightNodes(highlightNodes);
-        setHighlightLinks(highlightLinks);
-    };
-
     const handleNodeHover = node => {
         if (!isClicked) {
-            console.log(isClicked)
             highlightNodes.clear();
             highlightLinks.clear();
             if (node) {
@@ -89,17 +85,31 @@ export default function ForceGraph({ setSelected }) {
         }
     };
 
+
     const handleLinkHover = link => {
-        highlightNodes.clear();
-        highlightLinks.clear();
-
-        if (link) {
-            highlightLinks.add(link);
-            highlightNodes.add(link.source);
-            highlightNodes.add(link.target);
+        if (link === null) {
+            selectedLinks.clear()
+            updateHighlight()
+            return
         }
+        if (isClicked) {
+            if (link.source.id === selected.id || link.target.id === selected.id) {
+                selectedLinks.clear();
+                setSLink(link.index)
 
-        updateHighlight();
+                if (link) {
+                    selectedLinks.add(link);
+                }
+
+                updateHighlight();
+            }
+
+        }
+    };
+
+    const updateHighlight = () => {
+        setHighlightNodes(highlightNodes);
+        setHighlightLinks(highlightLinks);
     };
 
     const paintRing = useCallback((node, ctx) => {
@@ -133,17 +143,28 @@ export default function ForceGraph({ setSelected }) {
 
     return <ForceGraph2D
         graphData={data}
-        dagMode="radialin"
+
+        // Graph style properties
         nodeRelSize={NODE_R}
-        dagLevelDistance={50}
-        autoPauseRedraw={false}
         linkWidth={link => highlightLinks.has(link) ? 5 : 1}
         linkDirectionalParticles={4}
-        linkDirectionalParticleWidth={link => highlightLinks.has(link) ? 4 : 0}
+        linkDirectionalParticleWidth={link => selectedLinks.has(link) ? 8 : 0}
+
+        // Graph force and rendering properties
+        dagMode="radialin"
+        dagLevelDistance={50}
+        autoPauseRedraw={false}
         nodeCanvasObjectMode={node => highlightNodes.has(node) ? 'before' : undefined}
         nodeCanvasObject={paintRing}
+        d3Force={(simulation) => {
+            // Here we are replacing the d3 simulation with our custom simulation
+            simulation.stop();  // Stop the existing simulation
+            Object.assign(simulation, forceSimulation);  // Assign our custom simulation
+        }}
+
+        // Interaction properties
         onNodeHover={handleNodeHover}
-        // onLinkHover={handleLinkHover}
+        onLinkHover={handleLinkHover}
         onNodeClick={handleNodeClick}
         onBackgroundClick={() => {
             // Clear the highlight if clicking on the background
@@ -152,11 +173,7 @@ export default function ForceGraph({ setSelected }) {
             setClickedNode(null);
             updateHighlight();
             setClicked(false);
-        }}
-        d3Force={(simulation) => {
-            // Here we are replacing the d3 simulation with our custom simulation
-            simulation.stop();  // Stop the existing simulation
-            Object.assign(simulation, forceSimulation);  // Assign our custom simulation
+            setSelected(null)
         }}
     />
 }
