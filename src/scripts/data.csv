@@ -1,0 +1,23 @@
+ID,NAME,TYPE,DESC,LINK,,
+001,homeowner,person,this is you!,"hires ""003""",,
+002,homebuyer,person,this is you!,"contacts ""003""","applied for mortgage from ""004""","searches ""022"""
+003,realtor,person,,"finds homes for ""001""","searches ""012""","finds homes for ""002"""
+004,bank,organization,,"accepts/rejects ""002""","sets ""020""",
+005,property mangagement groups,organization,,"buy from ""018""",,
+006,landlord,person,,,,
+007,rentor,person,,,,
+008,universities,organization,,"increases ""007""",,
+009,property owner,person,,,,
+010,developers,organization,,,,
+011,property assessment office,organization,,"assesses value of ""018""",,
+012,multiple listing service,database,,,,
+013,boston home center,organization,,"helps ""002""","helps ""001""",
+014,home price,variable,,,,
+015,boston housing authority,organization,,,,
+016,boston office of housing,organization,,,,
+017,mass housing,organization,,"helps ""002""",,
+018,housing stock,variable,,"decreases ""019""","listed in ""012""","listed in ""022"""
+019,land values,variable,,,,
+020,mortgage rate,variable,,,,
+021,median household income,variable,,,,
+022,real estate databases,database,,,,

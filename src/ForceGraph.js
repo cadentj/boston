@@ -3,14 +3,15 @@ import { ForceGraph2D } from 'react-force-graph'
 import * as d3 from 'd3-force';
 import { useCallback, useMemo, useState } from "react";
 import SpriteText from "three-spritetext";
+import treeData from './tree_data.json'
 
-
-const BACKGROUNDCOLOR = "#000000"; 
-const LINKCOLOR = "#D3D3D3";       
-const NODECOLOR = "#e6194B";      
-const HOVEREDTARGETNODECOLOR = "#4363d8";  
-const HOVEREDSOURCENODECOLOR = "#3cb44b"; 
+const BACKGROUNDCOLOR = "#100e0f"; 
+const LINKCOLOR = "#ae8301";       
+const NODECOLOR = "#af3029";      
+const HOVEREDTARGETNODECOLOR = "#205fa6";  
+const HOVEREDSOURCENODECOLOR = "#5e419d"; 
 const MATERIALCOLOR = '#000000'
+
 
 function genRandomTree(N = 300, reverse = false) {
     return {
@@ -27,6 +28,13 @@ function genRandomTree(N = 300, reverse = false) {
 
 export default function ForceGraph({ selected, setSelected, setSLink }) {
     const NODE_R = 12;
+
+    const [highlightNodes, setHighlightNodes] = useState(new Set());
+    const [highlightLinks, setHighlightLinks] = useState(new Set());
+    const [hoverNode, setHoverNode] = useState(null);
+    const [clickedNode, setClickedNode] = useState(null);
+    const [isClicked, setClicked] = useState(false)
+    const [selectedLinks, setSelectedLinks] = useState(new Set())
 
     const data = useMemo(() => {
 
@@ -49,14 +57,6 @@ export default function ForceGraph({ selected, setSelected, setSLink }) {
 
         return gData;
     }, []);
-
-    const [highlightNodes, setHighlightNodes] = useState(new Set());
-    const [highlightLinks, setHighlightLinks] = useState(new Set());
-    const [hoverNode, setHoverNode] = useState(null);
-    const [clickedNode, setClickedNode] = useState(null);
-    const [isClicked, setClicked] = useState(false)
-    const [selectedLinks, setSelectedLinks] = useState(new Set())
-
 
 
     const handleNodeClick = node => {
@@ -90,6 +90,7 @@ export default function ForceGraph({ selected, setSelected, setSLink }) {
             setHoverNode(node || null);
             updateHighlight();
         }
+        console.log(data)
     };
 
 
@@ -163,12 +164,13 @@ export default function ForceGraph({ selected, setSelected, setSLink }) {
         // Graph style properties
         nodeRelSize={NODE_R}
         backgroundColor={BACKGROUNDCOLOR}
-        nodeColor={node => 'red'}
+        nodeColor={node => NODECOLOR}
         linkColor={link => LINKCOLOR}
         linkDirectionalParticleColor={MATERIALCOLOR}
         linkWidth={link => highlightLinks.has(link) ? 5 : 1}
         linkDirectionalParticles={4}
         linkDirectionalParticleWidth={link => selectedLinks.has(link) ? 8 : 0}
+        // linkCurvature="curvature"
 
         // Graph force and rendering properties
         dagMode="radialin"

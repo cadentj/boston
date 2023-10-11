@@ -1,0 +1,34 @@
+ID,NAME,TYPE,DESC,LINK,,
+001,homeowner,person,This is you!,"hires ""003""",,
+002,homebuyer,person,This is you!,"contacts ""003""","applied for mortgage from ""004""","searches ""022"""
+003,realtor,person,A person who represents sellers or buyers of real estate or real property.,"finds homes for ""001""","searches ""012""","finds homes for ""002"""
+004,bank,organization,Provides loans to individuals and businesses for property purchases.,"accepts/rejects ""002""","sets ""020""",
+005,property mangagement groups,organization,Responsible for the management of the service charge and the delivery of management and maintenance services at the property.,"buy from ""018""","assists ""006""",
+006,landlord,person,"The owner of a house, apartment, condominium, land, or real estate which is rented or leased to an individual or business.","charges ""007""","decreases ""018""",
+007,tennant,person,A person who occupies land or property rented from a landlord.,"decreases ""018""",,
+008,universities,organization,Institutions of higher education.,"increases ""007""","increases ""026""",
+009,property owner,person,"A person or entity that holds the title to a piece of real estate, including the land and any buildings on it.",,,
+010,developers,organization,"Organizations or individuals involved in the planning, construction, and marketing of real estate projects.","increases ""018""",,
+011,property assessment office,organization,An organization responsible for determining the value of properties for taxation purposes.,"assesses value of ""018""",,
+012,multiple listing service,database,database created by cooperating real estate brokers to share data about houses on the market at any given time,"database for ""003""",,
+013,boston home center,organization,"Governmental organization dedicated to helping Boston residents buy, improve, and keep their homes.","helps ""002""","helps ""001""",
+014,home price,variable,The average housing price in the area. ,"set by ""001""","affected by ""018""",
+015,boston housing authority,organization,"An organization that provides affordable housing options to the residents of Boston, ensuring safe and decent living conditions.",,,
+016,boston office of housing,organization,"An organization responsible for housing policy and development within Boston, aimed at creating affordable housing opportunities and promoting neighborhood stability.",,,
+017,mass housing,organization,An independent agency that provides financing to create and preserve affordable housing in Massachusetts.,"helps ""002""",,
+018,housing stock,variable,Amount of housing available for purchase,"decreases ""019""","listed in ""012""","listed in ""022"""
+019,land values,variable,Value of the land as well as any improvements made to the land,,,
+020,mortgage rate,variable,Interest rate homebuyer pays to finance the purchase of the house,"set by ""004""","affected by ""024""",
+021,median household income,variable,"The middle value of income earned by households in a specific area, used as an indicator of economic health.",,,
+022,real estate databases,database,"Databases like Zillow, which homebuyers can use to search for houses on the market","database for ""002""","info also listed in ""012""",
+023,construction costs,variable,"The total expense incurred in the building of new structures, including costs of materials, labor, and other related expenses.","decreases ""018""",,
+024,interest rate,variable,"The cost of borrowing money, expressed as a percentage of the loan amount, typically charged on an annual basis.","increases ""023""",,
+025,FHA,organization,"A U.S. government agency that provides mortgage insurance on loans made by approved lenders, aiming to facilitate homeownership.","provides loans for ""002""",,
+026,neighborhood demand,variable,"The level of interest and desire of individuals or families to live in a particular neighborhood, often reflecting the area's attractiveness and amenities.","decreases ""027""",,
+027,displacement,variable,When existing homeowners are forced to move from their residences due to increased demand in their neighborhoods.,"direct relationship to ""026""",,
+028,affordable housing,variable,"Housing that is financially manageable for individuals or families with 
+low to moderate incomes, typically defined as costing no more than 30% 
+of the household's income.",,,
+029,zoning policy,variable,"Regulations and laws governing the use and development of land, 
+including restrictions on the types of buildings and activities allowed 
+in certain areas.",,,
