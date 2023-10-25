@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/boston/static/css/main.52025f41.css",
+    "main.js": "/boston/static/js/main.556b9cf6.js",
+    "static/js/952.0fe53bd0.chunk.js": "/boston/static/js/952.0fe53bd0.chunk.js",
+    "static/js/111.73a80e5d.chunk.js": "/boston/static/js/111.73a80e5d.chunk.js",
+    "index.html": "/boston/index.html",
+    "main.52025f41.css.map": "/boston/static/css/main.52025f41.css.map",
+    "main.556b9cf6.js.map": "/boston/static/js/main.556b9cf6.js.map",
+    "952.0fe53bd0.chunk.js.map": "/boston/static/js/952.0fe53bd0.chunk.js.map",
+    "111.73a80e5d.chunk.js.map": "/boston/static/js/111.73a80e5d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.52025f41.css",
+    "static/js/main.556b9cf6.js"
+  ]
+}
