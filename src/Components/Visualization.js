@@ -13,7 +13,7 @@ const BLUE = [0, 130, 200];
 const PURPLE = [145,30,180];
 
 // Source data CSV
-const DATA_URL = require('./data.json'); // eslint-disable-line
+const DATA_URL = require('../Data/data.json'); // eslint-disable-line
 
 const INITIAL_VIEW_STATE = {
     longitude: -71.0815,

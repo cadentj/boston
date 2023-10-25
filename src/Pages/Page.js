@@ -1,4 +1,4 @@
-import Visualization from './Visualization';
+import Visualization from '../Components/Visualization';
 
 import { Typography, Box, Grid } from '@mui/material';
 import Radio from '@mui/material/Radio';

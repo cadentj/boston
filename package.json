@@ -6,6 +6,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.11",
+    "@react-spring/web": "^9.7.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -20,7 +21,10 @@
     "react-dom": "^18.2.0",
     "react-force-graph": "^1.43.2",
     "react-map-gl": "^7.1.6",
+    "react-router": "^6.17.0",
+    "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "react-scroll-percentage": "^4.3.0",
     "three-spritetext": "^1.8.1",
     "web-vitals": "^2.1.4"
   },

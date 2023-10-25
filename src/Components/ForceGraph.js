@@ -3,7 +3,7 @@ import { ForceGraph2D } from 'react-force-graph'
 import * as d3 from 'd3-force';
 import { useCallback, useMemo, useState } from "react";
 import SpriteText from "three-spritetext";
-import treeData from './tree_data.json'
+import treeData from '../Data/tree_data.json'
 
 const BACKGROUNDCOLOR = "#100e0f"; 
 const LINKCOLOR = "#ae8301";       
