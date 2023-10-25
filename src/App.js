@@ -12,15 +12,15 @@ const theme = createTheme({
     // fontFamily: [
     //   'Roboto',
     // ].join(','),
-    allVariants: {
-      color: 'white'
-    },
+    // allVariants: {
+    //   color: 'white'
+    // },
     // button: {
     //   textTransform: 'none'
     // },
   },
   palette: {
-    mode: 'dark',
+    mode: 'light',
   },
 });
 

@@ -2,12 +2,7 @@ import { useMemo } from "react"
 import * as d3 from "d3"
 import { useState, useEffect } from "react"
 
-const MARGIN = 70
-
-// 360 degrees (full circle) = 2π radians
-const degToRad = deg => {
-    return (deg * 2 * Math.PI) / 360
-}
+const MARGIN = 10
 
 
 export default function Dendrogram({ width, height, data }) {

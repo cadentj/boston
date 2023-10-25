@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { Paper, Slider, Stack, Button, ButtonGroup, Typography, Box, Grid } from '@mui/material';
 import Dendrogram from './Dendro.js'
+
+import Section from './Section.js';
 import { randomInt } from 'd3';
 
 import useScrollPosition from '../hooks/useScrollPosition.js'
@@ -13,8 +15,9 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+const valueRange = { min: 0, max: 1000 };
 
-function generateData(leafCount, averageLinks, valueRange) {
+function generateInitialData(leafCount = 10, averageLinks = 2, valueRange = { min: 0, max: 1000 }) {
   const newData = {
     type: 'node',
     name: "boss",
@@ -24,7 +27,7 @@ function generateData(leafCount, averageLinks, valueRange) {
 
   const allLeaves = [];
   for (let i = 0; i < leafCount; i++) {
-    const leafName = getRandomInt(0, 1000);
+    const leafName = `Node ${getRandomInt(0, 1000)}`;
     if (!allLeaves.includes(leafName)) {
       allLeaves.push(leafName);
       const leaf = {
@@ -50,57 +53,90 @@ function generateData(leafCount, averageLinks, valueRange) {
   return newData;
 }
 
-// Usage:
-const leafCount = 20;
-const averageLinks = 2; // not in use
-const valueRange = { min: 0, max: 1000 };
-const newData = generateData(leafCount, averageLinks, valueRange);
-console.log(newData);
 
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 export default function BasicGrid() {
 
-  const [income, setIncome] = useState(30);
-  const [assets, setAssets] = useState(30);
-  const [houseType, setHouseType] = useState('');
-
-  const handleIncomeChange = (event, newValue) => {
-    setIncome(newValue);
-  };
-
-  const handleAssetsChange = (event, newValue) => {
-    setAssets(newValue);
-  };
-
-  const handleHouseTypeChange = (newType) => {
-    setHouseType(newType);
-  };
-
-  const handleSubmit = () => {
-    console.log({ income, assets, houseType });
-  };
-
   const scrollPosition = useScrollPosition();
+
+  const [data, setData] = useState(generateInitialData());
+
+  const addNewNodesAndEdges = () => {
+    // Generate a new leaf/node.
+    const newNode = {
+      type: 'leaf',
+      name: `Node${getRandomInt(0, 1000)}`,
+      value: getRandomInt(valueRange.min, valueRange.max),
+      links: []
+    };
+
+    // Get a list of current leaf names. This includes the new leaf we just added.
+    const currentLeafNames = data.children.map(child => child.name).concat([newNode.name]);
+
+    // Randomly generate links for this node. Here, we're creating between 1 to 3 links for demonstration purposes.
+    const newLinksCount = getRandomInt(1, 3);
+
+    for (let i = 0; i < newLinksCount; i++) {
+      const randomLeafName = currentLeafNames[getRandomInt(0, currentLeafNames.length - 1)];
+
+      // Avoid linking to itself and avoid duplicate links.
+      if (randomLeafName !== newNode.name && !newNode.links.includes(randomLeafName)) {
+        newNode.links.push(randomLeafName);
+      }
+    }
+
+    // Update the data state with the new node, which will trigger a re-render.
+    setData(prevData => {
+      return { ...prevData, children: [...prevData.children, newNode] };
+    });
+  };
+
+  const removeNodesAndEdges = () => {
+    setData(prevData => {
+      const newChildren = [...prevData.children];
+      newChildren.pop();  // Remove the last node
+      return { ...prevData, children: newChildren };
+    });
+  };
+
+  const [previousScrollPosition, setPreviousScrollPosition] = useState(0);
+  const scrollDirection = scrollPosition > previousScrollPosition ? "down" : "up";
+
+  useEffect(() => {
+    setPreviousScrollPosition(scrollPosition);
+  }, [scrollPosition]);
+
+
+  const [lastTriggeredPosition, setLastTriggeredPosition] = useState(0);
+
+
+  useEffect(() => {
+    const ratio = scrollPosition / window.innerHeight;
+    const currentTriggerPosition = Math.floor(ratio / 0.25) * 0.25;
+
+    if (currentTriggerPosition !== lastTriggeredPosition && currentTriggerPosition % 0.25 === 0) {
+      if (scrollDirection === "down") {
+        addNewNodesAndEdges();
+      } else if (scrollDirection === "up") {
+        removeNodesAndEdges();
+      }
+      setLastTriggeredPosition(currentTriggerPosition);
+    }
+  }, [scrollPosition, scrollDirection]);
+
 
   return (
     <Box className="page" sx={{}}>
       <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" />
-      <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed", top: 0, borderColor: "black" }} >
-        <Box sx={{pl:35}}>
-          <Dendrogram data={newData} width={700} height={500} />
+      <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }} >
+        <Box sx={{ pl: 30 }}>
+          <Dendrogram data={data} width={700} height={500} />
         </Box>
-        <Typography variant="body1" color="black">{scrollPosition / window.innerHeight}</Typography>
       </Box>
-      <Box className="centered-flex" sx={{ width: "50%", height: "200%", right: 0, position: "absolute", border: 1, borderColor: "black" }} >
-
+      <Box sx={{ width: "50%", height: "300vh", right: 0, pr: 10, position: "absolute" }} >
+        <Section />
+        <Section />
+        <Section />
       </Box>
 
     </Box>
