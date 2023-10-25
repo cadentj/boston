@@ -112,9 +112,9 @@ export default function BasicGrid() {
 
   useEffect(() => {
     const ratio = scrollPosition / window.innerHeight;
-    const currentTriggerPosition = Math.floor(ratio / 0.25) * 0.25;
+    const currentTriggerPosition = Math.floor(ratio / 0.50) * 0.50;
 
-    if (currentTriggerPosition !== lastTriggeredPosition && currentTriggerPosition % 0.25 === 0) {
+    if (currentTriggerPosition !== lastTriggeredPosition && currentTriggerPosition % 0.50 === 0) {
       if (scrollDirection === "down") {
         addNewNodesAndEdges();
       } else if (scrollDirection === "up") {
@@ -124,13 +124,14 @@ export default function BasicGrid() {
     }
   }, [scrollPosition, scrollDirection]);
 
+  const graphWidth = window.innerWidth/2 - 150
 
   return (
     <Box className="page" sx={{}}>
       <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" />
       <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }} >
-        <Box sx={{ pl: 30 }}>
-          <Dendrogram data={data} width={700} height={500} />
+        <Box sx={{ pl: 30, pt: 10}}>
+          <Dendrogram data={data} width={graphWidth} height={graphWidth} />
         </Box>
       </Box>
       <Box sx={{ width: "50%", height: "300vh", right: 0, pr: 10, position: "absolute" }} >

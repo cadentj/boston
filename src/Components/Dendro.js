@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import * as d3 from "d3"
 import { useState, useEffect } from "react"
 
-const MARGIN = 10
+const MARGIN = 150
 
 
 export default function Dendrogram({ width, height, data }) {

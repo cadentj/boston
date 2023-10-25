@@ -120,3 +120,7 @@ code {
   -webkit-animation: 0.5s ease 0s normal forwards 1 fadeout;
   animation: 0.5s ease 0s normal forwards 1 fadeout;
 }
+
+.cursor {
+  cursor: pointer;
+}

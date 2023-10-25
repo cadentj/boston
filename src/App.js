@@ -5,6 +5,7 @@ import MadLibs from './Components/Main';
 import Cover from './Pages/Cover.js';
 
 import { Navigate, useNavigate, Routes, Route } from 'react-router-dom';
+import Overlay from './Components/Overlay';
 
 
 const theme = createTheme({
@@ -27,7 +28,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      
+      <Overlay/>
       <Routes>
         <Route path="/" element={<Cover />} />
         <Route path="/*" element={<MainLayoutRoutes />} />
