@@ -19,12 +19,8 @@ export default function Overlay({ home }) {
 
     return (
 
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 20 }}>
-
-            <div style={{ ...overlayStyle, ...{ top: height - 57, right: 40, fontSize: '13px' } }} id="fade-in">
-                <a className='cursor' onClick={() => navigate("/housing")}>Housing</a> | <a className='cursor' onClick={() => navigate("/graph")}>Stakeholders</a>
-            </div>
-
+        <div style={{ ...overlayStyle, ...{ top: height - 57, right: 40, fontSize: '13px', position: "fixed" } }} id="fade-in">
+            <a className='cursor' onClick={() => navigate("/housing")}>Housing</a> | <a className='cursor' onClick={() => navigate("/graph")}>Stakeholders</a>
         </div>
     )
 }
