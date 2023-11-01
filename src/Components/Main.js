@@ -17,7 +17,9 @@ function getRandomInt(min, max) {
 
 const valueRange = { min: 0, max: 1000 };
 
-function generateInitialData(leafCount = 10, averageLinks = 2, valueRange = { min: 0, max: 1000 }) {
+function generateInitialData(leafCount = 1, averageLinks = 2, valueRange = { min: 0, max: 1000 }) {
+  console.log("generated initial data")
+
   const newData = {
     type: 'node',
     name: "boss",
@@ -53,13 +55,17 @@ function generateInitialData(leafCount = 10, averageLinks = 2, valueRange = { mi
   return newData;
 }
 
+// Leave on outside so initial data is only generated once. 
 
+const outData = generateInitialData()
 
 export default function BasicGrid() {
 
   const scrollPosition = useScrollPosition();
 
-  const [data, setData] = useState(generateInitialData());
+  const [data, setData] = useState(outData);
+
+  console.log(data.children.map(child => child.name))
 
   const addNewNodesAndEdges = () => {
     // Generate a new leaf/node.

@@ -1,11 +1,15 @@
 import { useMemo } from "react"
 import * as d3 from "d3"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { transition, ease } from "d3";
 
 const MARGIN = 150
 
 
 export default function Dendrogram({ width, height, data }) {
+    const svgRef = useRef(null);
+
+
     const hierarchy = useMemo(() => {
         return d3.hierarchy(data).sum(d => d.value)
     }, [data])
@@ -19,6 +23,8 @@ export default function Dendrogram({ width, height, data }) {
 
 
     const allNodes = dendrogram.descendants().map(node => {
+        if (node.depth === 0) return null; // skip rendering the boss node
+
         const turnLabelUpsideDown = node.x > 180;
         const rotation = turnLabelUpsideDown ? 180 : 0;
         return (
@@ -33,7 +39,6 @@ export default function Dendrogram({ width, height, data }) {
                         y={0}
                         fontSize={12}
                         textAnchor={turnLabelUpsideDown ? "end" : "start"}
-                        // transform={`rotate(${rotation})`}
                         alignmentBaseline="middle"
                     >
                         {node.data.name}
@@ -41,8 +46,9 @@ export default function Dendrogram({ width, height, data }) {
                 )}
             </g>
         )
-    })
-    
+    });
+
+
     const [additionalLinks, setAdditionalLinks] = useState([]);
 
     useEffect(() => {
@@ -97,9 +103,29 @@ export default function Dendrogram({ width, height, data }) {
             });
         });
 
+    useEffect(() => {
+        // Select the SVG element
+        const svg = d3.select(svgRef.current);
+
+        // Fade in the nodes
+        svg.selectAll("circle")
+            .transition()
+            .duration(1000)
+            .attr("opacity", 1)
+            // .ease(easeCubicInOut);
+
+        // Fade in the edges
+        svg.selectAll("path")
+            .transition()
+            .duration(1000)
+            .attr("opacity", 1)
+            // .ease(easeCubicInOut);
+    }, [allNodes, allEdges]);
+
+
     return (
         <div>
-            <svg width={width} height={height}>
+            <svg ref={svgRef} width={width} height={height}>
                 <g
                     transform={
                         "translate(" +
