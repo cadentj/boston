@@ -63,7 +63,7 @@ export default function App() {
     useEffect(() => {
         let interval;
         if (trigger) {
-            interval = setInterval(() => navigate("/narrative"), 1000);
+            interval = setInterval(() => navigate("/preparation"), 1000);
         }
         return () => clearInterval(interval);
     }, [trigger]);

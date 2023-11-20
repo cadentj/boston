@@ -8,6 +8,10 @@ import { Navigate, useNavigate, Routes, Route } from 'react-router-dom';
 import Overlay from './Components/Overlay';
 
 import PreparationPage from './Pages/PreparationPage';
+import { ExplorationContents } from './Components/ExplorationContents';
+import ExplorationPage from './Pages/ExplorationPage';
+import ApplicationPage from './Pages/ApplicationPage';
+import FinalizationPage from './Pages/FinalizationPage';
 
 
 const theme = createTheme({
@@ -38,9 +42,10 @@ const MainLayoutRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/narrative" element={<PreparationPage />} />
-        <Route path="/graph" element={<StakeholderPage />} />
-        <Route path="/housing" element={<Page />} />
+        <Route path="/preparation" element={<PreparationPage />} />
+        <Route path="/exploration" element={<ExplorationPage />} />
+        <Route path="/application" element={<ApplicationPage />} />
+        <Route path="/finalization" element={<FinalizationPage />} />
       </Routes>
     </div>
   );

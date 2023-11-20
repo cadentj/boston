@@ -84,6 +84,7 @@ const Dendrogram = forwardRef(({ width, height, data, initialSection }, ref) => 
       .descendants()
       .filter((node) => node.depth > 0)
       .map((node, i) => {
+
         const parentNode = node.parent;
 
         // Start at the root node, radius is 0
@@ -94,7 +95,6 @@ const Dendrogram = forwardRef(({ width, height, data, initialSection }, ref) => 
 
         // Check if either the node or its parent is in a revealed section
         const isEdgeRevealed = revealedSections.has(node.data.section) || revealedSections.has(parentNode.data.section);
-
         return (
           <path
             key={i}
