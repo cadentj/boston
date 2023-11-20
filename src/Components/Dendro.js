@@ -112,6 +112,10 @@ const Dendrogram = forwardRef(({ width, height, data, initialSection }, ref) => 
     // Update revealed sections
     setRevealedSections(prev => new Set([...prev, sectionName]));
 
+    // Create a hierarchy from the data
+    const hierarchy = d3.hierarchy(data);
+    const rootNode = hierarchy; // The root node of the hierarchy
+
     // Select and style nodes of previously revealed sections
     d3.select(nodesRef.current).selectAll("g")
       .filter(function () {
@@ -131,17 +135,9 @@ const Dendrogram = forwardRef(({ width, height, data, initialSection }, ref) => 
 
     nodeSelection.select("circle").transition().style("opacity", 1).style("fill", "#69b3a2");
     nodeSelection.select("text").transition().style("opacity", 1); // Ensure labels are visible
+};
 
-    // Reveal edges connected to the nodes of the current section
-    d3.select(edgesRef.current).selectAll("path")
-      .filter(function () {
-        // Logic to filter paths connected to the current section's nodes
-        // You might need to adjust this based on your data structure
-        return /* condition to check if path is connected to nodes of current section */;
-      })
-      .transition()
-      .style("opacity", 1); // Adjust as needed to make edges visible
-  };
+
 
 
   // Modified hideNodes function

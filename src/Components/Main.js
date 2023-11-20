@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Dendrogram from './Dendro.js';
 import Section from './Section.js';
 import useScrollPosition from '../hooks/useScrollPosition.js';
 import ProgressBar from './ProgressBar.js';
+import StyledAccordion from './StyledAccordion.js';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -47,13 +48,15 @@ const sampleData = [
 
 const transformedData = transformData(sampleData);
 
+const sections = [
+  { id: 'Wants & Needs', name: 'Wants & Needs' },
+  { id: 'Create Your Budget', name: 'Create Your Budget' },
+  { id: 'Homebuying Education', name: 'Homebuying Education' },
+  { id: 'Gather Documents', name: 'Gather Documents' }
+];
+
 export default function BasicGrid() {
-  const sections = [
-    { id: 'Wants & Needs', name: 'Wants & Needs' },
-    { id: 'Create Your Budget', name: 'Create Your Budget' },
-    { id: 'Homebuying Education', name: 'Homebuying Education' },
-    { id: 'Gather Documents', name: 'Gather Documents' }
-  ];
+
 
   const graphWidth = window.innerWidth / 2 - 150;
   const dendrogramRef = useRef();
@@ -62,14 +65,14 @@ export default function BasicGrid() {
 
   useEffect(() => {
     const container = document.querySelector('.container-snap');
-    
+
     const handleScroll = () => {
       let activeSectionId = null;
-      
+
       sections.forEach(section => {
         const sectionElement = document.getElementById(section.id);
         const { top, bottom } = sectionElement.getBoundingClientRect();
-        
+
         if (top < window.innerHeight && bottom >= 0) {
           // Section is in the viewport
           activeSectionId = section.id;
@@ -87,16 +90,16 @@ export default function BasicGrid() {
 
       }
     };
-  
+
     container.addEventListener('scroll', handleScroll);
-  
+
     return () => container.removeEventListener('scroll', handleScroll);
   }, [activeSection, sections, previousSection]);
+  const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'teal', 'brown', 'gray'];
 
-  
   return (
     <Box className="page">
-      <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" />
+      {/* <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" /> */}
       <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }}>
         <Box sx={{ pr: 10, pb: 20 }}>
           <Dendrogram ref={dendrogramRef} data={transformedData} width={graphWidth} height={graphWidth} initialSection="Wants & Needs" />
@@ -104,11 +107,38 @@ export default function BasicGrid() {
       </Box>
       <ProgressBar sections={sections} />
       <Box className="container-snap" sx={{ width: "50%", height: "100vh", right: 0, position: "absolute" }}>
-        {/* Assign IDs and class to your sections */}
-        <Section id={sections[0].id} />
-        <Section id={sections[1].id} />
-        <Section id={sections[2].id} />
-        <Section id={sections[3].id} />
+        {sections.map(({ id }, index) => (
+          <Box
+            key={index + 1}
+            className="section"
+            sx={{
+              width: '100%',
+              height: '100vh',
+              margin: '10px',
+            }}
+            id={id}
+          >
+            <Typography variant='h3'>Inspection</Typography>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <StyledAccordion
+              summary="Resources"
+              details={(
+                <div>
+                  <a href="http://www.example.com">www.example.com</a>
+                  <a href="http://www.example.com">www.example.com</a>
+                  <a href="http://www.example.com">www.example.com</a>
+                </div>
+              )}
+            />
+            <StyledAccordion
+              summary="Barriers"
+              details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            />
+          </Box>
+        ))}
+
       </Box>
     </Box>
   );

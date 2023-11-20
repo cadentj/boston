@@ -10,12 +10,13 @@ body {
 .container-snap {
   scroll-snap-type: y mandatory;
   overflow-y: scroll;
-  height: 100vh; /* Adjust height as needed */
+  height: 100%; /* Adjust height as needed */
 }
 
 .section {
   height: 100vh; /* Adjust height as needed */
   scroll-snap-align: center;
+  padding-top: 20vh;
 }
 
 

@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 const Section = ({id}) => {
     return (
-        <div id={id} className="budget-section section" style={{ width: '100vw'}}>
+        <div id={id} className="budget-section section" style={{ width: '100%'}}>
             <Typography variant='h3'>Inspection</Typography>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
