@@ -10,15 +10,9 @@ import Overlay from './Components/Overlay';
 
 const theme = createTheme({
   typography: {
-    // fontFamily: [
-    //   'Roboto',
-    // ].join(','),
-    // allVariants: {
-    //   color: 'white'
-    // },
-    // button: {
-    //   textTransform: 'none'
-    // },
+    fontFamily: [
+      'Roboto',
+    ].join(','),
   },
   palette: {
     mode: 'light',
@@ -28,7 +22,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Overlay/>
+      <Overlay />
       <Routes>
         <Route path="/" element={<Cover />} />
         <Route path="/*" element={<MainLayoutRoutes />} />
@@ -42,9 +36,9 @@ const MainLayoutRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/narrative" element={<MadLibs  />} />
+        <Route path="/narrative" element={<MadLibs />} />
         <Route path="/graph" element={<StakeholderPage />} />
-        <Route path="/housing" element={<Page/>} />
+        <Route path="/housing" element={<Page />} />
       </Routes>
     </div>
   );

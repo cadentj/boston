@@ -1,13 +1,9 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { styled } from '@mui/material/styles';
-import { Paper, Slider, Stack, Button, ButtonGroup, Typography, Box, Grid } from '@mui/material';
-import Dendrogram from './Dendro.js'
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, Button } from '@mui/material';
+import Dendrogram from './Dendro.js';
 import Section from './Section.js';
-import { randomInt } from 'd3';
-
-import useScrollPosition from '../hooks/useScrollPosition.js'
+import useScrollPosition from '../hooks/useScrollPosition.js';
+import ProgressBar from './ProgressBar.js';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -17,137 +13,103 @@ function getRandomInt(min, max) {
 
 const valueRange = { min: 0, max: 1000 };
 
-function generateInitialData(leafCount = 1, averageLinks = 2, valueRange = { min: 0, max: 1000 }) {
-  console.log("generated initial data")
-
-  const newData = {
+// New function to transform your specific data format into a hierarchical structure
+function transformData(inputData) {
+  const root = {
     type: 'node',
-    name: "boss",
-    value: getRandomInt(valueRange.min, valueRange.max),
+    name: 'Root',
     children: []
   };
 
-  const allLeaves = [];
-  for (let i = 0; i < leafCount; i++) {
-    const leafName = `Node ${getRandomInt(0, 1000)}`;
-    if (!allLeaves.includes(leafName)) {
-      allLeaves.push(leafName);
-      const leaf = {
-        type: 'leaf',
-        name: leafName,
-        value: getRandomInt(valueRange.min, valueRange.max),
-        links: []
-      };
-      newData.children.push(leaf);
-    }
-  }
-
-  newData.children.forEach(leaf => {
-    const linkCount = getRandomInt(0, averageLinks);
-    for (let i = 0; i < linkCount; i++) {
-      const randomLeafName = allLeaves[getRandomInt(0, allLeaves.length - 1)];
-      if (randomLeafName !== leaf.name && !leaf.links.includes(randomLeafName)) {
-        leaf.links.push(randomLeafName);
-      }
-    }
+  inputData.forEach(item => {
+    root.children.push({
+      type: 'leaf',
+      name: item.Name,
+      value: item['Position (1 - close 2 - middle 3 - far)'],
+      section: item.Section, // Storing the section information
+      links: ['Root']
+    });
   });
 
-  return newData;
+  return root;
 }
 
-// Leave on outside so initial data is only generated once. 
+const sampleData = [
+  { Name: 'Family', Page: 'Preparation', Section: 'Wants & Needs', 'Position (1 - close 2 - middle 3 - far)': 1 },
+  { Name: 'BHC', Page: 'Preparation', Section: 'Create Your Budget', 'Position (1 - close 2 - middle 3 - far)': 2 },
+  { Name: 'Personal Bank', Page: 'Preparation', Section: 'Create Your Budget', 'Position (1 - close 2 - middle 3 - far)': 2 },
+  { Name: 'Homebuying Class', Page: 'Preparation', Section: 'Homebuying Education', 'Position (1 - close 2 - middle 3 - far)': 3 },
+  { Name: 'Bank Statements', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
+  { Name: 'Credit Report', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
+  { Name: 'Tax Returns', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
+  { Name: 'Pay Stubs', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 }
+];
 
-const outData = generateInitialData()
+const transformedData = transformData(sampleData);
 
 export default function BasicGrid() {
+  const sections = [
+    { id: 'Wants & Needs', name: 'Wants & Needs' },
+    { id: 'Create Your Budget', name: 'Create Your Budget' },
+    { id: 'Homebuying Education', name: 'Homebuying Education' },
+    { id: 'Gather Documents', name: 'Gather Documents' }
+  ];
 
-  const scrollPosition = useScrollPosition();
+  const graphWidth = window.innerWidth / 2 - 150;
+  const dendrogramRef = useRef();
+  const [activeSection, setActiveSection] = useState(sections[0].id);
+  const [previousSection, setPreviousSection] = useState(null);
 
-  const [data, setData] = useState(outData);
+  useEffect(() => {
+    const container = document.querySelector('.container-snap');
+    
+    const handleScroll = () => {
+      let activeSectionId = null;
+      
+      sections.forEach(section => {
+        const sectionElement = document.getElementById(section.id);
+        const { top, bottom } = sectionElement.getBoundingClientRect();
+        
+        if (top < window.innerHeight && bottom >= 0) {
+          // Section is in the viewport
+          activeSectionId = section.id;
+        }
+      });
 
-  console.log(data.children.map(child => child.name))
+      if (activeSectionId && activeSectionId !== activeSection) {
+        setPreviousSection(activeSection);
+        setActiveSection(activeSectionId);
 
-  const addNewNodesAndEdges = () => {
-    // Generate a new leaf/node.
-    const newNode = {
-      type: 'leaf',
-      name: `Node${getRandomInt(0, 1000)}`,
-      value: getRandomInt(valueRange.min, valueRange.max),
-      links: []
+        // Call revealNodes for the new active section
+        console.log(activeSectionId)
+        dendrogramRef.current.revealNodes(activeSectionId);
+
+
+      }
     };
+  
+    container.addEventListener('scroll', handleScroll);
+  
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [activeSection, sections, previousSection]);
 
-    // Get a list of current leaf names. This includes the new leaf we just added.
-    const currentLeafNames = data.children.map(child => child.name).concat([newNode.name]);
-
-    // Randomly generate links for this node. Here, we're creating between 1 to 3 links for demonstration purposes.
-    const newLinksCount = getRandomInt(1, 3);
-
-    for (let i = 0; i < newLinksCount; i++) {
-      const randomLeafName = currentLeafNames[getRandomInt(0, currentLeafNames.length - 1)];
-
-      // Avoid linking to itself and avoid duplicate links.
-      if (randomLeafName !== newNode.name && !newNode.links.includes(randomLeafName)) {
-        newNode.links.push(randomLeafName);
-      }
-    }
-
-    // Update the data state with the new node, which will trigger a re-render.
-    setData(prevData => {
-      return { ...prevData, children: [...prevData.children, newNode] };
-    });
-  };
-
-  const removeNodesAndEdges = () => {
-    setData(prevData => {
-      const newChildren = [...prevData.children];
-      newChildren.pop();  // Remove the last node
-      return { ...prevData, children: newChildren };
-    });
-  };
-
-  const [previousScrollPosition, setPreviousScrollPosition] = useState(0);
-  const scrollDirection = scrollPosition > previousScrollPosition ? "down" : "up";
-
-  useEffect(() => {
-    setPreviousScrollPosition(scrollPosition);
-  }, [scrollPosition]);
-
-
-  const [lastTriggeredPosition, setLastTriggeredPosition] = useState(0);
-
-
-  useEffect(() => {
-    const ratio = scrollPosition / window.innerHeight;
-    const currentTriggerPosition = Math.floor(ratio / 0.50) * 0.50;
-
-    if (currentTriggerPosition !== lastTriggeredPosition && currentTriggerPosition % 0.50 === 0) {
-      if (scrollDirection === "down") {
-        addNewNodesAndEdges();
-      } else if (scrollDirection === "up") {
-        removeNodesAndEdges();
-      }
-      setLastTriggeredPosition(currentTriggerPosition);
-    }
-  }, [scrollPosition, scrollDirection]);
-
-  const graphWidth = window.innerWidth/2 - 150
-
+  
   return (
-    <Box className="page" sx={{}}>
+    <Box className="page">
       <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" />
-      <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }} >
-        <Box sx={{ pl: 30, pt: 10}}>
-          <Dendrogram data={data} width={graphWidth} height={graphWidth} />
+      <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }}>
+        <Box sx={{ pr: 10, pb: 20 }}>
+          <Dendrogram ref={dendrogramRef} data={transformedData} width={graphWidth} height={graphWidth} initialSection="Wants & Needs" />
         </Box>
       </Box>
-      <Box sx={{ width: "50%", height: "300vh", right: 0, pr: 10, position: "absolute" }} >
-        <Section />
-        <Section />
-        <Section />
+      <ProgressBar sections={sections} />
+      <Box className="container-snap" sx={{ width: "50%", height: "100vh", right: 0, position: "absolute" }}>
+        {/* Assign IDs and class to your sections */}
+        <Section id={sections[0].id} />
+        <Section id={sections[1].id} />
+        <Section id={sections[2].id} />
+        <Section id={sections[3].id} />
       </Box>
-
     </Box>
   );
 }
-
-

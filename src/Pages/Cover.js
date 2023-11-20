@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useTrail, useSpring, a } from "@react-spring/web"
-import { Typography, Box } from "@mui/material"
+import { Typography, Box, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
 import "../styles/cover.css"
@@ -17,7 +17,9 @@ const TitleTrail = ({ open, children }) => {
         from: { opacity: 0, y: 100, transform: `perspective(600px) rotateX(${-90}deg)`, height: 0 },
     })
     return (
-        <Box>
+        <Box
+            sx={{mb:5}}
+        >
             {trail.map(({ height, ...style }, index) => (
                 <a.div key={index} className="title-trail" style={style} >
                     <a.div style={{ height }}>{items[index]}</a.div>
@@ -55,6 +57,9 @@ export default function App() {
 
     const [trigger, setTrigger] = useState(false);
 
+    const sectionNames = ["Preparation", "Exploration", "Application", "Closing"];
+    const colors = ['red', 'blue', 'green', 'yellow'];
+
     useEffect(() => {
         let interval;
         if (trigger) {
@@ -62,6 +67,11 @@ export default function App() {
         }
         return () => clearInterval(interval);
     }, [trigger]);
+
+    const navigateToSection = (section) => {
+        // You'll need to define the logic to navigate to a specific section
+        console.log(`Navigating to ${section}`);
+    }
 
     return (
         <div>
@@ -74,8 +84,38 @@ export default function App() {
                         <Typography variant='h1' color="black">JOURNEY</Typography>
                     </TitleTrail>
                     <FadeInComponent>
-                        <Typography variant='body1' color="black">CLICK TO CONTINUE</Typography>
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            sx={{
+                                color: 'black',
+                                borderColor: 'black',
+                                borderWidth: 2, // Increase the border width for a thicker border
+                                fontSize: '1rem', // Increase font size for larger text
+                                padding: '10px 24px', // Increase padding for a larger button
+                                '&:hover': {
+                                    borderColor: 'black', // Ensure the border color stays black on hover
+                                    borderWidth: 2 // Ensure the border width stays thick on hover
+                                }
+                            }}
+                        >
+                            CLICK TO BEGIN
+                        </Button>
                     </FadeInComponent>
+                </Box>
+                <Box sx={{ width: "50%", display: "flex", flexDirection: "column", alignItems: "flex-end", pr: 4 }}>
+                    <Box
+                        sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
+                    >
+
+                        {sectionNames.map((section, index) => (
+                            <Box key={section} sx={{ display: "flex", alignItems: "center", mb: 2, cursor: "pointer" }} onClick={() => navigateToSection(section)}>
+                                <Box sx={{ width: 15, height: 15, bgcolor: colors[index], borderRadius: "50%", mr: 1 }}></Box>
+                                <Typography>{section}</Typography>
+                            </Box>
+                        ))}
+                    </Box>
+
                 </Box>
             </div>
         </div>
