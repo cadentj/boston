@@ -4,9 +4,7 @@
     color: #333;
     /* This is a standard dark grey, adjust as needed */
     max-width: 30vw;
-    /* Adjust based on your layout */
-    margin: 0 auto;
-    /* padding: 20px; */
+
     
     display: flex;
     flex-direction: column;

@@ -5,20 +5,15 @@ import Section from './Section.js';
 import useScrollPosition from '../hooks/useScrollPosition.js';
 import ProgressBar from './ProgressBar.js';
 import StyledAccordion from './StyledAccordion.js';
+import Contents from './Contents.js';
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-const valueRange = { min: 0, max: 1000 };
+import "./section.css"
 
 // New function to transform your specific data format into a hierarchical structure
 function transformData(inputData) {
   const root = {
     type: 'node',
-    name: 'Root',
+    name: 'You',
     children: []
   };
 
@@ -26,7 +21,7 @@ function transformData(inputData) {
     root.children.push({
       type: 'leaf',
       name: item.Name,
-      value: item['Position (1 - close 2 - middle 3 - far)'],
+      value: item['Position'],
       section: item.Section, // Storing the section information
       links: ['Root']
     });
@@ -35,31 +30,32 @@ function transformData(inputData) {
   return root;
 }
 
-const sampleData = [
-  { Name: 'Family', Page: 'Preparation', Section: 'Wants & Needs', 'Position (1 - close 2 - middle 3 - far)': 1 },
-  { Name: 'BHC', Page: 'Preparation', Section: 'Create Your Budget', 'Position (1 - close 2 - middle 3 - far)': 2 },
-  { Name: 'Personal Bank', Page: 'Preparation', Section: 'Create Your Budget', 'Position (1 - close 2 - middle 3 - far)': 2 },
-  { Name: 'Homebuying Class', Page: 'Preparation', Section: 'Homebuying Education', 'Position (1 - close 2 - middle 3 - far)': 3 },
-  { Name: 'Bank Statements', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
-  { Name: 'Credit Report', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
-  { Name: 'Tax Returns', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 },
-  { Name: 'Pay Stubs', Page: 'Preparation', Section: 'Gather Documents', 'Position (1 - close 2 - middle 3 - far)': 3 }
-];
+function extractSections(preparation) {
+  const sectionMap = new Map();
+  const sections = [];
 
-const transformedData = transformData(sampleData);
+  preparation.forEach(item => {
+    const sectionId = item.Section;
+    if (!sectionMap.has(sectionId)) {
+      sectionMap.set(sectionId, true);
+      sections.push({ id: sectionId, name: sectionId });
+    }
+  });
 
-const sections = [
-  { id: 'Wants & Needs', name: 'Wants & Needs' },
-  { id: 'Create Your Budget', name: 'Create Your Budget' },
-  { id: 'Homebuying Education', name: 'Homebuying Education' },
-  { id: 'Gather Documents', name: 'Gather Documents' }
-];
+  return sections;
+}
 
-export default function BasicGrid() {
+const pageOrder = ["Preparation", "Exploration", "Application", "Closing"];
+
+export default function BasicGrid({ data, contents }) {
+
+  const transformedData = transformData(data);
+  const sections = extractSections(data);
 
 
   const graphWidth = window.innerWidth / 2 - 150;
   const dendrogramRef = useRef();
+
   const [activeSection, setActiveSection] = useState(sections[0].id);
   const [previousSection, setPreviousSection] = useState(null);
 
@@ -77,6 +73,7 @@ export default function BasicGrid() {
           // Section is in the viewport
           activeSectionId = section.id;
         }
+        console.log(sectionElement)
       });
 
       if (activeSectionId && activeSectionId !== activeSection) {
@@ -84,7 +81,6 @@ export default function BasicGrid() {
         setActiveSection(activeSectionId);
 
         // Call revealNodes for the new active section
-        console.log(activeSectionId)
         dendrogramRef.current.revealNodes(activeSectionId);
 
 
@@ -95,7 +91,8 @@ export default function BasicGrid() {
 
     return () => container.removeEventListener('scroll', handleScroll);
   }, [activeSection, sections, previousSection]);
-  const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'teal', 'brown', 'gray'];
+
+  
 
   return (
     <Box className="page">
@@ -105,37 +102,24 @@ export default function BasicGrid() {
           <Dendrogram ref={dendrogramRef} data={transformedData} width={graphWidth} height={graphWidth} initialSection="Wants & Needs" />
         </Box>
       </Box>
-      <ProgressBar sections={sections} />
-      <Box className="container-snap" sx={{ width: "50%", height: "100vh", right: 0, position: "absolute" }}>
-        {sections.map(({ id }, index) => (
+      <ProgressBar sections={sections} activeSection={activeSection} />
+      <Box className="container-snap" sx={{ width: "38vw", height: "100vh", right: 0, position: "absolute", borderColor: "black" }}>
+        {contents.map(({ section, description, resources, barriers }, index) => (
+          
           <Box
             key={index + 1}
-            className="section"
+            className="section budget-section"
             sx={{
-              width: '100%',
+              width: '30vw',
               height: '100vh',
               margin: '10px',
             }}
-            id={id}
+            id={section}
           >
-            <Typography variant='h3'>Inspection</Typography>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <StyledAccordion
-              summary="Resources"
-              details={(
-                <div>
-                  <a href="http://www.example.com">www.example.com</a>
-                  <a href="http://www.example.com">www.example.com</a>
-                  <a href="http://www.example.com">www.example.com</a>
-                </div>
-              )}
-            />
-            <StyledAccordion
-              summary="Barriers"
-              details="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            />
+            <Contents title={section} description={description} barriers={barriers} resources={resources}/>
+            {(index === sections.length-1) && <Box sx={{ width: "100%", mt:10, display: "flex", justifyContent: "center" }} >
+              <Button variant="outlined" color="secondary">Next</Button>
+            </Box>}
           </Box>
         ))}
 

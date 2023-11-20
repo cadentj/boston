@@ -58,7 +58,7 @@ export default function App() {
     const [trigger, setTrigger] = useState(false);
 
     const sectionNames = ["Preparation", "Exploration", "Application", "Closing"];
-    const colors = ['red', 'blue', 'green', 'yellow'];
+    const colors = ['#0079FF', '#00DFA2', '#F6FA70', '#FF0060'];
 
     useEffect(() => {
         let interval;

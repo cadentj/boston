@@ -7,6 +7,8 @@ import Cover from './Pages/Cover.js';
 import { Navigate, useNavigate, Routes, Route } from 'react-router-dom';
 import Overlay from './Components/Overlay';
 
+import PreparationPage from './Pages/PreparationPage';
+
 
 const theme = createTheme({
   typography: {
@@ -22,7 +24,7 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Overlay />
+      {/* <Overlay /> */}
       <Routes>
         <Route path="/" element={<Cover />} />
         <Route path="/*" element={<MainLayoutRoutes />} />
@@ -36,7 +38,7 @@ const MainLayoutRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/narrative" element={<MadLibs />} />
+        <Route path="/narrative" element={<PreparationPage />} />
         <Route path="/graph" element={<StakeholderPage />} />
         <Route path="/housing" element={<Page />} />
       </Routes>

@@ -1,0 +1,679 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Final Journey</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7ad83257-0c59-4d13-b0c3-d109ab7af950" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">♥️</span></div><h1 class="page-title">Final Journey</h1><p class="page-description"></p></header><div class="page-body"><h1 id="ab9dd104-a4ea-486b-87f2-aedfb82bae44" class="">Preparation</h1><p id="44dd1b02-353a-48fd-bb1e-2c5d9e333ab2" class=""><strong>Description: </strong></p><p id="59d52110-eaf4-4ba0-a7ac-4ccdbb9fbd2a" class="">This step outlines everything you need to accomplish before embarking on your home search. This includes identifying your preferences for a new home, gathering all necessary documents for the journey ahead, and establishing a realistic budget. By preparing thoroughly in advance, you can approach the process with confidence, ensuring you are comfortable with your decisions and grounded in your expectations for your new home. This proactive approach not only puts you in control of your choices but also streamlines the entire process, making it as efficient as possible. While unexpected changes or exigent circumstances may arise, the following steps are designed to account for the anticipated course of action. Good luck!</p><p id="f3b1b751-8eaf-4242-8da5-fb8db021a99b" class=""><strong>Diagram Contents:</strong></p><ul id="7de61cd8-e8d5-4e61-96f4-ca6a9eff0ee2" class="bulleted-list"><li style="list-style-type:disc">Family</li></ul><ul id="02b1b405-73ac-44dd-af78-9a07e09fe6f7" class="bulleted-list"><li style="list-style-type:disc">BHC</li></ul><ul id="68aafde8-0b89-46bf-a6a3-d3a006009a22" class="bulleted-list"><li style="list-style-type:disc">Personal Bank</li></ul><ul id="3b845870-cfdb-4fdf-93aa-0199649d2cee" class="bulleted-list"><li style="list-style-type:disc">Bank Statements</li></ul><ul id="4505033c-8565-43fd-ad5d-0bac905621d2" class="bulleted-list"><li style="list-style-type:disc">Credit Report</li></ul><ul id="b2e026b7-d994-40d4-a3c3-e412e225bf61" class="bulleted-list"><li style="list-style-type:disc">Homebuying Class</li></ul><h3 id="dd91fd8d-b6db-4041-ba30-8f04dab87254" class="">Wants &amp; Needs</h3><p id="2878a96f-32f6-4972-ac2a-e403897b4001" class=""><strong>Description: </strong>The journey begins by articulating your vision for your new home. The most effective approach is to create a comprehensive list categorizing must-haves, needs, and wants. Must-haves encompass elements that are indispensable to you, such as location, parking spaces, and proximity to public transportation. Needs are similar but represent features you might be open to adding later, such as large kitchen islands or a specific number of bathrooms. Wants are additional aspects that enhance the appeal of a house when comparing different options.</p><p id="025f9446-5dff-44f0-845c-39b6f562e7d9" class="">This step is incredibly beneficial as it allows you to streamline your house search with your realtor. It also enables you, at a later stage, to compare your choices and factor in any potential renovation costs associated with a particular property.</p><p id="374842dc-866a-4850-ae2e-07ef6d73da0e" class="">Remember! There are a lot of surprise costs that you may incur in the first year of your new home including any unexpected repairs, general upkeep, insurance costs. It is smart to set aside additional funds for these as well!</p><p id="42830ec5-1bf4-465b-ab2c-6110d1f97570" class=""><strong>Resources:</strong></p><p id="35c64950-f18e-49ba-bc5f-e1fad95180af" class=""><strong>Barriers: </strong></p><ul id="04ae1ff4-7516-4a1d-a973-605216ffd7a2" class="bulleted-list"><li style="list-style-type:disc">Feeling overwhelmed by down payment value— there are A LOT of down payment assistance programs that exist today. Using the BHC is an awesome resource to explore your options as you move further down the line </li></ul><ul id="2a600f85-fda5-4d53-b85d-2e88900defae" class="bulleted-list"><li style="list-style-type:disc">limited savings</li></ul><h3 id="134089fc-bc51-4a4f-9b13-6d6e610cb2cb" class="">Create Your Budget</h3><p id="7cdcb8f6-3b8c-419e-abb0-53ef22844986" class=""><strong>Description: </strong>When crafting a budget, remember to think <strong>SMART</strong>: Specific, Measurable, Attainable, Realistic, and Time-bound! Ensure that your budget accounts for explicit costs, including fixed expenses (such as mortgage, down payment, health care, and credit cards), maintenance costs for your new home (covering home repairs, heating, and electricity), expenses related to the home-buying process (such as payments to realtors and lawyers), as well as discretionary costs like food, clothing, and daily expenditures.</p><p id="8a5c008f-d310-46ba-a1d7-778ecffdcb23" class="">This approach is crucial for establishing realistic expectations as you progress to defining your preferences for a new home. It enables you to distinguish between wants and needs based on specific data points, facilitating a more informed decision-making process.</p><p id="564c0fe3-6edb-4570-bf10-42665b88befc" class="">Something that may be helpful: write these down and begin a folder for all the documents that you will eventually need to gather for buying your home!</p><p id="07c2f058-d429-4475-bd44-9c3b701fde62" class=""><strong>Resources:</strong></p><p id="53f39849-6269-4578-a975-d7387954ff1e" class="">Comprehensive list of of what you may want/need/must-have: <a href="https://www.lowermybills.com/page_assets/static/77a2bfb154e47ddaf0b64ed6f2720612/LMB_WantsVsNeedsVsMustHavesChecklist_Final.pdf">https://www.lowermybills.com/page_assets/static/77a2bfb154e47ddaf0b64ed6f2720612/LMB_WantsVsNeedsVsMustHavesChecklist_Final.pdf</a></p><p id="bd438aa4-0f17-432d-b4f7-f34fa3ebc927" class=""><strong>Barriers:</strong></p><h3 id="3a7b844b-ae0c-4eb3-95a1-f5d33f85d577" class="">Homebuying Class</h3><p id="e8ff412b-272a-4a94-9799-5349919d1741" class=""><strong>Description: </strong>Before you begin the rest of your journey, if you are looking to qualify for any home finance  assistance programs in Boston, you are <strong>REQUIRED </strong>to take the Boston Home-buying 101 class.</p><p id="0d049243-46f5-429d-b243-9ca68857cac5" class="">This class provides you with critical information that will help you through the home buying process. The link to register is provided in the resources tab!</p><p id="690d68d9-c711-46cc-b0d6-ba45cc9c2830" class=""><strong>Resources: </strong><a href="https://www.boston.gov/departments/housing/boston-home-center/boston-home-center-classes#additional-homebuyer-classes">https://www.boston.gov/departments/housing/boston-home-center/boston-home-center-classes#additional-homebuyer-classes</a></p><p id="270ee5b7-5e3c-47ef-9850-90530f4efd2c" class=""><strong>Barriers:</strong></p><p id="26b2e918-f8e5-441d-94c0-73e581f89cb6" class="">Time commitment: It is a long class but the information will help you clear up a lot of questions you may have and also graduating from this class allows you to qualify for a plethora of financial assistance programs!</p><h3 id="341b4388-3e95-4d29-80bd-9d9d31a77e21" class="">Gather Documents</h3><p id="50469331-dc2a-4f0f-a3c5-a588e08f23f0" class=""><strong>Description: </strong>When you are meeting with lenders make sure to bring:</p><ol type="1" id="413517c7-d076-4e9b-9e58-7df26a98eaa4" class="numbered-list" start="1"><li>Identity: your driver’s license, passport, state approved id</li></ol><ol type="1" id="a8d45688-a695-4b14-9205-02c47d27d3aa" class="numbered-list" start="2"><li>Social Security Card</li></ol><ol type="1" id="37792ad8-100e-47e1-a007-fb0787447e86" class="numbered-list" start="3"><li>Tax returns: all tax fetus and W-2s from the past two years so the lender can verify if household income was consistent<ol type="a" id="c5ea1bf3-f4c1-43fb-9b05-546917561149" class="numbered-list" start="1"><li>If you are self-employed instead of W-2s bring your 1099 forms for the same reason</li></ol></li></ol><ol type="1" id="0045873b-510a-4e5a-afc9-1bcf46fe37a0" class="numbered-list" start="4"><li>Pay Stubs from the past 30 days</li></ol><ol type="1" id="731d2f8a-dce1-4110-af8b-88377c4be596" class="numbered-list" start="5"><li>Bank Account statements from, the last 60 days<ol type="a" id="3d9f6891-6946-4d53-8d28-fe34606b86eb" class="numbered-list" start="1"><li>Make sure to bring statements from ALL accounts: checking, savings, investments, and retirement (for investment and retirement quarterly is fine)</li></ol></li></ol><ol type="1" id="4fd81c62-0270-4e94-846c-dcfd18873a85" class="numbered-list" start="6"><li>Additional documents: these are based on exigent circumstances <ol type="a" id="e19cd468-9889-4f65-b9bc-c7c9c52bb229" class="numbered-list" start="1"><li>Any divorce documents </li></ol><ol type="a" id="48332445-4857-486d-bb23-58efa9fd6be2" class="numbered-list" start="2"><li>Any debt or bankruptcy related documents </li></ol><ol type="a" id="83e16d21-2a51-4e50-93dc-ae18f243daf9" class="numbered-list" start="3"><li>Any rental history <ol type="i" id="767f77e3-fb22-4959-88a9-5ed2496ac7bd" class="numbered-list" start="1"><li>The best way to judge this is if it is related to financial history, bring it! It is always better to bring more than less</li></ol></li></ol></li></ol><p id="117feb47-9bcb-4fc7-98d9-b8971dc5e525" class="">It helps to make a folder with all these documents and keep it organized so you are never rushing and have all these documents in one place. There is a lot of paperwork so organization is key to reducing stress!</p><p id="eb4b1bf7-d40c-4b8b-99d3-40b4433f0d46" class=""><strong>Resources: </strong></p><p id="88f4391a-d571-4354-ae15-b478e1e85f36" class=""><strong>Barriers:</strong></p><p id="077cff65-74b6-42a0-aa70-d11225b8b845" class="">Unable to locate or find documents</p><p id="2df07b21-76cb-44ae-9fc1-349dc63fd46d" class="">Exigent circumstances not listed may be overwhelming</p><h1 id="2190b3de-2586-49bf-8b54-29928ec276a9" class="">Exploration</h1><p id="b2ea2909-e671-4e93-be07-d7cab4d0dab2" class=""><strong>Description: </strong></p><p id="d840d505-d793-4fef-9684-b52f2eac3087" class="">This stage is dedicated to establishing your financial foundation as you embark on the exciting journey of searching for your new home. It involves the careful selection of a realtor or real estate agent tailored to your needs, identifying a lender for the optimal mortgage pre-approval, and understanding the financial assistance options available to you. The culmination of these steps marks the beginning of your search for the perfect home. While discussing your financial situation with others and potentially revising your budget may seem overwhelming, embracing this reality now will ultimately contribute to a smoother transition into your new home. Additionally, the process becomes more manageable, given that you have already gathered the necessary documents, alleviating potential stress that may have occurred if you had waited!  </p><p id="f8624190-5b32-4c04-aa4a-4a8b5affee86" class=""><strong>Diagram Contents:</strong></p><ul id="d19463c9-8b56-4699-9a63-51095f5ea16d" class="bulleted-list"><li style="list-style-type:disc">Downpayment Assistance</li></ul><ul id="1c5bd1ba-19ed-46c6-bd56-55cf25522cf4" class="bulleted-list"><li style="list-style-type:disc">Family</li></ul><ul id="d8a145ce-ac72-4783-bbf6-ea1ac213e2b4" class="bulleted-list"><li style="list-style-type:disc">Affordable Mortgage</li></ul><ul id="1f1e6c50-b4e6-4c2a-a484-d2f5815b249d" class="bulleted-list"><li style="list-style-type:disc">Closing Cost Grant</li></ul><ul id="23404f27-399f-4760-a7df-fd6818d7f46d" class="bulleted-list"><li style="list-style-type:disc">Lender</li></ul><ul id="5617f18d-d161-418b-ad60-7e936de0c93a" class="bulleted-list"><li style="list-style-type:disc">Real Estate Agent</li></ul><ul id="2b5eebae-3dcd-464b-9979-6c503ad2f2e4" class="bulleted-list"><li style="list-style-type:disc">Employer</li></ul><ul id="731a647f-a148-4f23-813e-1a6ae98b384f" class="bulleted-list"><li style="list-style-type:disc">Loan Officer</li></ul><h3 id="1ad60aed-1a9c-4008-ba7f-90dd04f97c73" class="">Build Your Team</h3><p id="9b6a68e1-80d3-4ad8-ba7e-a628e70891eb" class=""><strong>Description: </strong></p><p id="dd28df4c-0b5c-4c10-af62-48e84c9655c6" class="">Now that you have an idea of a budget and what you are looking for in your new home it’s time to assemble your team! This includes a lender and a realtor/ real estate agent. </p><p id="0675f3d3-f855-495f-b2fe-2e2938a13494" class="">To find a reputable lender, seek recommendations from family and friends who have previously purchased homes, and consult with the BHC (Boston Home Center). Additionally, the attached section includes a list of approved lenders affiliated with the BHC and other governmental agencies (In order to qualify for any financial assistance programs you HAVE TO work with lenders on this list). You can also utilize the NMLS database to verify a lender&#x27;s certification to operate in Massachusetts.</p><p id="a1640105-5173-4cb2-bd2a-4a95dd7622e2" class="">Similarly,  hiring a real estate agent (licensed and passed a listening exam) or a realtor (part of the National Association of Realtors) can provide you with more houses that are now available to the public yet as well as help streamline your house hunting process and make it more efficient.</p><p id="5ac75840-4426-4ad7-8265-b3268b356058" class="">Finding an agent may seem tricky here are some things you can do to find the perfect one for you:</p><ol type="1" id="26f8c11e-c381-46b1-bbed-b92ceebd4f81" class="numbered-list" start="1"><li>Use your network of friends and family to see who they may have used to find their home</li></ol><ol type="1" id="9871ca95-1f2f-4ce2-9104-200791412161" class="numbered-list" start="2"><li>Do your own research: figure out if you want to work with a broker firm or an independent agent, look at reviews, do they have a good reputation</li></ol><ol type="1" id="35d29b6f-fe07-4828-919a-3746ed71af9d" class="numbered-list" start="3"><li>You can use <a href="https://www.realtor.com/thats-who-we-r/">realtor.com</a> to look for NAR licensed agents in your area</li></ol><p id="c6b61d86-63da-44d2-af11-c1eb64f956a4" class=""><strong>Resources</strong><em><strong>: </strong></em></p><p id="3f497ab1-5fc0-4d03-8b84-273c9ca90e5c" class="">Website to look for NAR licensed agents in your area: <a href="https://www.realtor.com/thats-who-we-r/">https://www.realtor.com/thats-who-we-r/</a></p><p id="c5cb89e9-732f-42c3-8f13-a2dc14a0eaf5" class=""><strong>Barriers:</strong></p><h3 id="e6a04e5f-8b2f-469f-a44e-209f31c3f21f" class="">Financial Assistance</h3><p id="30b463f5-8ca5-4ca7-94d1-955faf28ef32" class=""><strong>Description: </strong></p><p id="e2484f28-288c-4221-bf3f-8267b07c80dd" class="">There could be a lot of financial programs you qualify for! These include down payment assistance programs, grants, etc. As long as you are working with one of the lenders on the BHC pre-approved list, you have already met one of the criteria to qualify! We recommend discussing your options with your lender as well as someone from the BHC staff.</p><p id="4fb0aa46-8728-4852-b711-737fd807e4f2" class=""><strong>Resources: </strong></p><p id="a20ed588-3443-4b9f-9c95-5f90481de794" class="">BHC Financial Assistance Website: <a href="https://www.boston.gov/departments/housing/find-financial-help-owning-home">https://www.boston.gov/departments/housing/find-financial-help-owning-home</a></p><p id="b055a07c-c649-4915-b73b-506e1c98934a" class=""><em>MA also has a mortgage program: MortgageOne. Assuming you have taken the Home buying Class and fit into the criteria they have,  it may be useful to also look at this resource: </em><em><a href="https://www.mass.gov/info-details/one-mortgage-program">https://www.mass.gov/info-details/one-mortgage-program</a></em></p><p id="76ea5ee7-b506-4eac-a488-4b43f938c95f" class=""><strong>Barriers:</strong></p><h3 id="7f4a5f75-7ba8-4fba-8eff-035ec0a8e7bb" class="">Begin Your Search</h3><p id="419980fe-21ab-4568-8c35-586424d539e1" class=""><strong>Description:</strong></p><p id="012f5e7b-6d1c-40cc-a53e-43b1793dbad2" class="">Once you have gotten pre-approved it is FINALLY time to start looking for your new home! You can begin looking on Zillow or other homebuying databases, as well as looking at all the recommendations your already found realtor has been sending you! Remember if you have not already to relay information like the following to your realtor:</p><ol type="1" id="fac70519-2b87-406b-8ec4-d9e4ab2a3557" class="numbered-list" start="1"><li>Your budget— (you may have changed this after your discussion with the lender and understanding what type of mortgage you were pre-approved for)</li></ol><ol type="1" id="07bca3ae-9d9c-4be4-b382-8dba9eb9cfa8" class="numbered-list" start="2"><li>Your must-haves, wants, and needs</li></ol><ol type="1" id="b3b27bdd-ff1b-411f-b41f-055b1e7a3743" class="numbered-list" start="3"><li>Specify locations! (You can never change this aspect of your home so make sure it is perfect)</li></ol><ol type="1" id="5695407e-1869-4dcf-bcb4-ee832dc2aa93" class="numbered-list" start="4"><li>Pick a home!</li></ol><p id="f85c1aaf-2db4-4ac1-a690-105b87cea191" class=""><strong>Resources: </strong></p><p id="af942185-29a4-4f3b-9018-fbafbd14c0ce" class="">Website to look for NAR licensed agents in your area: <a href="https://www.realtor.com/thats-who-we-r/">https://www.realtor.com/thats-who-we-r/</a></p><p id="80c45f08-eebb-4db7-b790-a0c5c8191acf" class=""><strong>Barriers:</strong></p><h3 id="9d49d13a-c46d-4a47-a230-a305070e4b5e" class="">Pre-Approval (?) </h3><p id="50a1daa6-97fa-4af6-9789-fed51c5fea22" class="">Based on if you are going through BHC or not? </p><p id="0df8949a-c503-4bc4-9fff-b42a4a54e488" class="">Find your lender- pre approval- assistance qualification for BHC</p><p id="aa8aa7bf-30f7-40b3-ab89-60ad99f445ab" class="">Right order for non-BHC?</p><p id="08fa68f0-cd07-4853-8e91-ec8ca9b04dda" class=""><strong>Description:</strong></p><p id="a4e162bb-e09e-46b3-adae-e19b76bd2717" class="">Once you&#x27;ve established your budget and <em>obtained your credit report</em>, it&#x27;s time to embark on the search for a mortgage lender. It&#x27;s crucial to undertake this step after completing the entire preparation phase, as it allows you to determine a comfortable down payment amount and understand the the amount of money per mortgage payment you can afford. Selecting the right lender is important, and verifying their licensing is essential.</p><p id="599b3144-1792-4f73-9cf5-c9cc89bbd1c6" class="">To find a reputable lender, seek recommendations from family and friends who have previously purchased homes, and consult with the BHC (Boston Home Center). Additionally, the attached section includes a list of approved lenders affiliated with the BHC and other governmental agencies (In order to qualify for any financial assistance programs you HAVE TO work with lenders on this list). You can also utilize the NMLS database to verify a lender&#x27;s certification to operate in Massachusetts.</p><p id="f1651115-fc55-462c-a5f7-6401c137eda5" class=""><strong>Resources:</strong></p><p id="ac9b6831-9da6-4f16-b4e4-698df6b402bd" class="">Approved lenders by BHC: <a href="https://www.boston.gov/departments/housing/meet-mortgage-lenders-we-work">https://www.boston.gov/departments/housing/meet-mortgage-lenders-we-work</a></p><p id="ab18f02e-3e90-49a3-9e1b-54cdcec42111" class="">NMLS Database: <a href="https://www.nmlsconsumeraccess.org/">https://www.nmlsconsumeraccess.org</a></p><p id="a6efbe1d-9519-408a-b19d-5abb7deaf792" class="">Consider thinking about what type of mortgage payment plan you would be comfortable accepting: <a href="https://extension.missouri.edu/gh5002">https://extension.missouri.edu/gh5002</a></p><p id="3f3bb2b3-9e27-4943-87a4-da573e22d835" class=""><strong>Barriers:</strong></p><p id="d7eb948c-8d2e-4cf1-ac2d-9a071a235719" class="">application fees </p><h1 id="860e2862-af56-4bd8-8890-a9a4e72d5401" class="">Application</h1><p id="ee0241ba-3309-46a4-9ce3-343616f09872" class=""><strong>Description: </strong></p><p id="7360b662-fa72-4444-94dc-d7ebaeada22d" class="">You&#x27;re on the verge of selecting your new home! After diligently establishing a realistic budget and choosing the ideal realtor or agent, it&#x27;s time to engage in a thorough comparison, weighing the pros and cons, and ultimately making the decision on THE home. This step involves selecting your home, securing legal representation by hiring an attorney, and finalizing your mortgage. It&#x27;s the pivotal moment of applying and, hopefully, concluding the process for your perfect home. Don&#x27;t forget to refer back to the must-haves, wants, and needs list you created at the beginning to ensure that the chosen home seamlessly meets all your requirements.</p><p id="856f6e8b-a6f9-4803-8148-11eaae91124f" class=""><strong>Diagram Contents:</strong></p><ul id="46b0f699-e698-4d62-8c4b-fe281372d2c3" class="bulleted-list"><li style="list-style-type:disc">Signed purchase Agreement</li></ul><ul id="3829e483-66af-4389-b40b-db506dddf6d3" class="bulleted-list"><li style="list-style-type:disc">Attorney</li></ul><ul id="957a3220-6123-49e6-9179-3d592ddd0bef" class="bulleted-list"><li style="list-style-type:disc">Formal Mortgage Application</li></ul><ul id="ecf279e9-fb48-4ea6-a00e-a62a86fa1301" class="bulleted-list"><li style="list-style-type:disc">Purchase and Sale Agreement</li></ul><ul id="7a63c1de-3eb5-43a0-97f5-0a8fd8c6662e" class="bulleted-list"><li style="list-style-type:disc">Family</li></ul><h3 id="fb66c93b-21e6-42ed-a6c2-02d413594ad4" class="">Choose Your Home</h3><p id="8ebe9389-bc15-4e9a-9747-7ff79c29546d" class=""><strong>Description:</strong></p><p id="97a08187-9b43-4401-87ba-c51fc897e1a8" class="">Selecting your home is the fun part! Walk-through different houses with your real estate agent, take notes of which you like, what you like etc. It may be helpful to make a pros and cons list (or equivalent) so you can later discuss and compare everything you have looked at with ease. Once you have looked through and found your home it is time to put in an offer which you have discussed with your agent. At this point the seller can agree or provide you with a counter-offer— you can of course, agree to that or deny and then continue looking.</p><p id="ba4a8ca4-ab23-4696-ae7d-a12efd5c9df2" class="">Before submitting an offer it is important to take another look at your budget factoring in all closing costs: any repairs that need to be done? what do commuting costs look like? general utility costs? This is important so that when you are walking in to your new home you are not ambushed by any surprise expenses you did not realize before. Additionally, keep in mind costs of home inspections, home insurance, property taxes, and if applicable any Homeowner Association (HOA) fees.</p><p id="29cc8f70-b33c-4cd6-81cd-a26868720d87" class=""><strong>Resources:</strong></p><p id="65d15e51-752a-4e55-884a-569467da97e5" class="">You can use something like this to compare homes: <a href="https://www.hud.gov/sites/documents/CHECKLIST-EN.PDF">https://www.hud.gov/sites/documents/CHECKLIST-EN.PDF</a></p><p id="0b0abcfb-0212-4113-a131-09deed9fb302" class=""><strong>Barriers:</strong></p><ul id="c6c57fdc-9857-47b2-9263-01a2a90d3021" class="bulleted-list"><li style="list-style-type:disc">Exhaustion: the average home buying process takes up to 10 weeks. It is long, tiring, and exhausting to find the perfect home that fits within your budget </li></ul><h3 id="cbdac16e-c401-4375-935d-e7239bfb9cc1" class="">Hire An Attorney</h3><p id="e8f91805-fbe1-4c20-a463-c1cae2ad0075" class=""><strong>Description:</strong></p><p id="40e46c4f-e588-4a71-908d-d14259eabb65" class="">Once you and the seller agree, you will make a deposit and the home will be in escrow— meaning you are contractually expected to buy the house under the assumption there are no serious damages to the home you were unaware of (NOT costs you did not account for). Typically the lender you use will have a closing attorney but you are free to hire your own as well.</p><p id="79f00669-619f-451b-ab73-82acf95b4566" class="">At this time, you may want to discuss with the BHA about hiring an attorney to draw up an agreement prior to accepting the offer. This is to provide you with additional security related to price, closing date, pre-approval letter and overall reviewing the contract for your new home!</p><p id="a4cd1f4f-c579-40d3-bd92-126d0a41a734" class="">3. if accepted, formal mortgage application with formal documents</p><p id="a16c09ef-3c40-401f-8eec-69a628778391" class="">1. get homeowners insurance (the best mortgages require this)</p><p id="011a22bf-97f3-4622-b655-46793d14d89f" class="">2. signed agreement from seller side (signed purchase agreement)</p><p id="b2c36a97-46f5-48ce-8f10-b5aa7bb62d57" class="">3. application fee</p><p id="cf76652d-0710-4855-83a2-fd721aaad7cd" class=""><strong>Resources:</strong></p><p id="2708efed-e9bc-4318-90de-00fd43b20389" class=""><strong>Barriers:</strong></p><h3 id="9170020c-e5e1-48c2-9b3e-47f0a47f748c" class="">Finalize your Mortgage</h3><p id="5d77a968-b8a4-4e59-ac7b-a93d5ed89b86" class=""><strong>Description:</strong></p><p id="020e27dd-c4ab-4a76-a17e-679a1b28303f" class="">Now that you have accepted an offer it is time to also go back to your lender with additional documents to have your mortgage finalized. These documents include:</p><ol type="1" id="4129ff2f-0f7c-48bb-ace1-dcc3f2409d0f" class="numbered-list" start="1"><li>Contract to purchase: the signed purchase and sale agreement. If there is any seller credit for closing costs, this must be included</li></ol><ol type="1" id="c8190399-5b0b-4134-a8cc-34082b579d60" class="numbered-list" start="2"><li>Verification of employment (if requested)</li></ol><ol type="1" id="579f698f-87d2-42be-b8f7-73fc6f64edb6" class="numbered-list" start="3"><li>Rental History: This is to prove you have a history of paying on time</li></ol><ol type="1" id="3789f747-262b-47be-9fba-c567583ef6b1" class="numbered-list" start="4"><li>Proof of Down payment and Closing Funds</li></ol><ol type="1" id="628ae67d-8cd5-46a0-9c33-65ba24d5ce35" class="numbered-list" start="5"><li>Any other documents that may explain exigent circumstances</li></ol><p id="90fcf9fd-6c7f-4c83-b0e3-0c2fa07bc1d6" class="">During this stage, your lender or loan specialist will let you know when you are ready to buy homeowner’s insurance. Make sure you are able to afford this because if not, the lender will force insurance on your home which will be MORE expensive. Additionally, keep in mind your lender may require you to pay 10-20% of your annual home insurance premium upfront so it is crucial to have some additional funds set aside for this.</p><p id="05a2f279-aeb8-458e-8786-a036b735fc58" class="">Add all of these to the folder you may have created as well!</p><p id="4bdbad7c-6564-4579-b009-2759de5281d0" class=""><strong>Resources:</strong></p><p id="607d77ab-9813-4baa-8568-1f5fcf0d8a13" class=""><strong>Barriers:</strong></p><h1 id="bd0d60ad-d55c-400f-adbe-7c6f452393b1" class="">Finalization</h1><p id="a3ac8fb9-d3ad-4509-9d48-d892099828f1" class=""><strong>Description: </strong></p><p id="eeaf8356-e7a8-4f01-8060-1d47f5935f82" class="">Now that you&#x27;ve submitted an offer and, hopefully, reached an agreement with the seller, what&#x27;s next? Well, to officially make your chosen home yours, there are still some paperwork and procedural steps to navigate. This phase provides details on appraising your home, conducting a thorough home inspection, and completing the official title transfer, ensuring that your perfect new home is officially under your name. It&#x27;s an exhilarating step that brings you closer to the conclusion of your home-buying journey. Keep pushing forward— you&#x27;ve got this!</p><p id="2c923783-fc09-45dd-88d7-00e57228b848" class=""><strong>Diagram Contents:</strong></p><ul id="207373f6-9e14-40fb-833e-c1cd02bdcb00" class="bulleted-list"><li style="list-style-type:disc">Title company</li></ul><ul id="b07c0228-230d-4584-85a2-9d331b36abde" class="bulleted-list"><li style="list-style-type:disc">Closing disclosure document</li></ul><ul id="2fe79a71-f312-4a60-a35c-fb1a1cdc5154" class="bulleted-list"><li style="list-style-type:disc">Family</li></ul><ul id="be712d34-3c4b-42e9-88de-c06863b4d8c1" class="bulleted-list"><li style="list-style-type:disc">Inspector</li></ul><ul id="064acc06-3de5-4e8f-b734-fdbec5304700" class="bulleted-list"><li style="list-style-type:disc">Appraiser</li></ul><ul id="8042962e-add1-40d3-b4bf-075a0daf0b2a" class="bulleted-list"><li style="list-style-type:disc">Appraisal Report</li></ul><h3 id="61da9fbb-9b43-457d-9bdb-cf6f086d37c4" class="">Inspection &amp; Appraisal</h3><p id="de5d68a1-1d65-41c6-a5e1-5fe30a70682f" class=""><strong>Description:</strong></p><p id="d0508798-647f-4470-aad5-ceca0d28232b" class="">There are two official things left to do:
+Get your home appraised as well to double check the loan is accurate to the value of the home.</p><p id="f6eb565e-7e22-4954-9413-6d2e888be934" class="">And, even  if your home looks perfect, it is crucial to have the home inspected. This will make sure that the home is in fact flawless and there is no serious or structural damage that was not disclosed to you. A home inspection general includes: roof, visible insulation, HVAC, interior plumbing and electrical systems, attic, windows and doors, foundation, walls, floors, and ceilings.</p><p id="aaf347dd-6a34-4315-be54-c205cc62a49b" class="">If there is certain damage that was not disclosed you are able to rescind your offer and get the deposit back or work with the seller to make repairs or discount the price.</p><p id="bf372fe0-5fc2-4807-a9fe-f256135a13a2" class="">If there is none, well you are all set, your home is ALMOST yours!</p><p id="d87f0911-9eda-43fa-9d97-8c93e8b62a36" class=""> An appraiser generally looks at: comparable sales, square footage, appearance, amenities, and overall condition </p><p id="3709e270-0d93-4c69-a285-6243b7ffd4c6" class=""><strong>Resources:</strong></p><p id="988b0455-61ee-4c33-979b-ab93b21c2a86" class=""><strong>Barriers:</strong></p><h3 id="95c02ec3-c979-4abd-9c02-56736af78bbe" class="">Title Transfer </h3><p id="8817b51e-9667-4b26-b449-84926b007722" class=""><strong>Description:</strong></p><p id="9c871047-385e-4da1-aaa7-5193d58262de" class="">This is a document you will sign that will officially make the house yours! Along with an appraisal and inspection it is almost important to make sure the seller actually owns the house. Your real estate attorney should conduct a title search to clarify that this is actually true. Typically, the lender’s attorney will handle this as well as any title insurance that needs to be placed on your home.</p><p id="59f113d6-1a05-44bb-a025-2b26179ce0a7" class=""><strong>Resources:</strong></p><p id="45a72e79-dd32-412d-b31f-428f1c296f42" class=""><strong>Barriers:</strong></p><h3 id="c7499d5c-a0cb-4e0d-8f0d-2ee69e343455" class="">Closing Disclosure </h3><p id="2e64c675-509c-423c-9cbb-41bd72bee15f" class=""><strong>Description:</strong></p><p id="8c1fe766-9f5a-47f2-8346-98b257669d40" class="">Almost there!</p><p id="4cc9d479-5e3a-47ef-a71f-eb8adb9afd7d" class="">Other documents you should have been asked to sign include:</p><ol type="1" id="8e0c7ce1-39bc-491a-aedd-4d80cbc9b329" class="numbered-list" start="1"><li>Settlement statement: summarizes all final charges and fees</li></ol><ol type="1" id="00f3c78d-f031-4afd-9822-dfa513547bed" class="numbered-list" start="2"><li>The promissory note: legal note showcasing summary of all payments, when they should be paid, and where the should be sent </li></ol><ol type="1" id="c8d7f8a7-34a4-4a71-9ccd-4b896fff09a9" class="numbered-list" start="3"><li>Deed of mortgage or trust:  The document in which you sign a lien (security deposit of sorts) as security for repayment of your loan</li></ol><p id="ae99d767-1279-4b1e-b7a0-67ffd19175be" class="">This is where you will also pay all closing costs so make sure you have enough funds to be able to cover those by this meeting… Congratulations!!</p><p id="3079a1db-12ed-4d88-b9a8-2edc00e244ee" class=""><strong>Resources:</strong></p><p id="35203a0f-5188-4d79-ad38-f67393060d9f" class=""><strong>Barriers:</strong></p><p id="348e97b8-d7a8-4c7c-8e39-8c2bed717d31" class="">
+</p><p id="50da08d2-7a10-472e-94aa-1a5ebe9be2e3" class="">
+</p><p id="889f02a4-79bb-4d68-9e84-c6d73cbe8bdd" class="">QUESTIONS:</p><ul id="10fc5f61-8c07-437d-9ef5-e61458393bbe" class="bulleted-list"><li style="list-style-type:disc">What type of barriers? Workable </li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
