@@ -24,7 +24,7 @@ const FinalizationContents = [
             </>
         ),
         "resources": "None",
-        "barriers": ""
+        "barriers": "None"
     },
     {
         "section": "Title Transfer",
@@ -36,7 +36,7 @@ const FinalizationContents = [
             </>
         ),
         "resources": "None",
-        "barriers": ""
+        "barriers": "None"
     },
     {
         "section": "Closing Disclosure",
@@ -59,7 +59,7 @@ const FinalizationContents = [
             </>
         ),
         "resources": "None",
-        "barriers": ""
+        "barriers": "None"
     }
 ];
 

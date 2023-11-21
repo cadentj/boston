@@ -27,7 +27,7 @@ const ExplorationContents = [
                 <ol>
                     <li>Use your network of friends and family to see who they may have used to find their home</li>
                     <li>Do your own research: figure out if you want to work with a broker firm or an independent agent, look at reviews, do they have a good reputation</li>
-                    <li>You can use <a href="https://www.realtor.com/thats-who-we-r/">realtor.com</a> to look for NAR licensed agents in your area</li>
+                    <li>You can use <a style={{display: "inline", margin: "0px"}} href="https://www.realtor.com/thats-who-we-r/">realtor.com</a> to look for NAR licensed agents in your area</li>
                 </ol>
             </>
         ),

@@ -11,7 +11,7 @@ const ApplicationContents = [
                 </p>
             </>
         ),
-        "resources": ["You can use something like this to compare homes: https://www.hud.gov/sites/documents/CHECKLIST-EN.PDF"],
+        "resources": ["https://www.hud.gov/sites/documents/CHECKLIST-EN.PDF"],
         "barriers": "- Exhaustion: the average home buying process takes up to 10 weeks. It is long, tiring, and exhausting to find the perfect home that fits within your budget"
     },
     {
@@ -59,7 +59,7 @@ const ApplicationContents = [
             </>
         ),
         "resources": "None",
-        "barriers": ""
+        "barriers": "None"
     }
 ];
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import Dendrogram from './Dendro.js';
-import Section from './Section.js';
 import useScrollPosition from '../hooks/useScrollPosition.js';
 import ProgressBar from './ProgressBar.js';
 import StyledAccordion from './StyledAccordion.js';
@@ -48,10 +47,10 @@ function extractSections(preparation) {
   return sections;
 }
 
-const pageOrder = ["Preparation", "Exploration", "Application", "Closing"];
-
 export default function BasicGrid({ data, contents }) {
   const transformedData = transformData(data);
+  
+
   const sections = extractSections(data);
 
 
@@ -117,11 +116,11 @@ export default function BasicGrid({ data, contents }) {
       {/* <Box className="page" sx={{ position: "absolute", zIndex: 50, background: "white" }} id="fade-overlay" /> */}
       <Box className="centered-flex" sx={{ width: "50%", height: "100%", position: "fixed" }}>
         <Box sx={{ pr: 10, pb: 20 }}>
-          <Dendrogram ref={dendrogramRef} data={transformedData} width={graphWidth} height={graphWidth} initialSection={data[0].section} />
+          <Dendrogram ref={dendrogramRef} data={transformedData} width={graphWidth} height={graphWidth} initialSection={contents[0].section} />
         </Box>
       </Box>
       <ProgressBar sections={sections} activeSection={activeSection} />
-      <Box className="container-snap" sx={{ width: "38vw", height: "100vh", right: 0, position: "absolute", borderColor: "black" }}>
+      <Box className="container-snap" sx={{ width: "45vw", height: "100vh", right: 0, position: "absolute", borderColor: "black" }}>
         {contents.map(({ section, description, resources, barriers }, index) => (
 
           <Box

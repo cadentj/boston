@@ -60,15 +60,10 @@ const d4 = (
                 <ol>
                     <li>Any divorce documents</li>
                     <li>Any debt or bankruptcy related documents</li>
-                    <li>Any rental history
-                        <ol>
-                            <li>The best way to judge this is if it is related to financial history, bring it! It is always better to bring more than less</li>
-                        </ol>
-                    </li>
+                    <li>Any rental history - The best way to judge this is if it is related to financial history, bring it! It is always better to bring more than less</li>
                 </ol>
             </li>
         </ol>
-        <p>It helps to make a folder with all these documents and keep it organized so you are never rushing and have all these documents in one place. There is a lot of paperwork so organization is key to reducing stress!</p>
     </>
 )
 

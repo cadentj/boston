@@ -1,3 +1,10 @@
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 const Preparation = [
     { name: 'Family', section: 'Wants & Needs', 'Position': 1 },
     { name: 'BHC', section: 'Create Your Budget', 'Position': 2 },
@@ -38,5 +45,10 @@ const Finalization = [
     { name: 'Closing Disclosure Document', section: 'Closing Disclosure', 'Position': 3 }
 ];
 
+shuffleArray(Preparation);
+shuffleArray(Exploration);
+shuffleArray(Application);
+shuffleArray(Finalization);
 
-export {Preparation, Exploration, Application, Finalization};
+export { Preparation, Exploration, Application, Finalization };
+

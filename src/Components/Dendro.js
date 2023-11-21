@@ -73,43 +73,62 @@ const Dendrogram = forwardRef(({ width, height, data, initialSection }, ref) => 
     });
 
 
-    const linksGenerator = d3.lineRadial()
-      .curve(d3.curveBundle.beta(0.1)) // Adjust the beta value to change the curvature
-      .radius((d, i) => (i === 0) ? 0 : positionRadius[d.data.value])
-      .angle((d) => (d.x / 180) * Math.PI);
+    function choose(choices) {
+      var index = Math.floor(Math.random() * choices.length);
+      return choices[index];
+    }
+    const calculateBendPoints = (dendrogram, positionRadius, radius) => {
+      return dendrogram
+        .descendants()
+        .filter(node => node.depth > 0)
+        .map(node => {
+          const parentNode = node.parent;
+          const endRadius = positionRadius[node.data.value] || radius;
 
+          const startX = Math.cos((parentNode.x - 90) * (Math.PI / 180));
+          const startY = Math.sin((parentNode.x - 90) * (Math.PI / 180));
+          const endX = endRadius * Math.cos((node.x - 90) * (Math.PI / 180));
+          const endY = endRadius * Math.sin((node.x - 90) * (Math.PI / 180));
 
+          const midRadius = (endRadius / 2) * (.5);
+          const midX = midRadius * Math.cos(((parentNode.x + node.x) / 2 - 90) * (Math.PI / 180));
+          const midY = midRadius * Math.sin(((parentNode.x + node.x) / 2 - 90) * (Math.PI / 180));
 
-    const edges = dendrogram
-      .descendants()
-      .filter((node) => node.depth > 0)
-      .map((node, i) => {
+          return { startX, startY, midX, midY, endX, endY, parentNode, node };
+        });
+    };
 
-        const parentNode = node.parent;
+    const bendPoints = calculateBendPoints(dendrogram, positionRadius, radius);
 
-        // Start at the root node, radius is 0
-        const pathData = [
-          { x: parentNode.x, y: 0, data: parentNode.data },
-          { x: node.x, y: node.y, data: node.data } // End at the child node's position
-        ];
+    const linksGenerator = d3.line()
+      .x(d => d.x)
+      .y(d => d.y)
+      .curve(d3.curveBundle.beta(0.9)); // Adjust the curvature
 
-        // Check if either the node or its parent is in a revealed section
-        const isEdgeRevealed = revealedSections.has(node.data.section) || revealedSections.has(parentNode.data.section);
-        return (
-          <path
-            key={i}
-            fill="none"
-            stroke="grey"
-            d={linksGenerator(pathData)}
-            style={{
-              opacity: isEdgeRevealed ? 1 : 0
-            }}
-          />
-        );
-      });
+    const edges = bendPoints.map((bp, i) => {
+      const pathData = [
+        { x: bp.startX, y: bp.startY },
+        { x: bp.midX, y: bp.midY },
+        { x: bp.endX, y: bp.endY }
+      ];
 
-    setAllNodes(nodes);
-    setAllEdges(edges);
+      const isEdgeRevealed = revealedSections.has(bp.node.data.section) || revealedSections.has(bp.parentNode.data.section);
+
+      return (
+        <path
+          key={i}
+          fill="none"
+          stroke="grey"
+          d={linksGenerator(pathData)}
+          style={{
+            opacity: isEdgeRevealed ? 1 : 0
+          }}
+        />
+      );
+    });
+
+    setAllNodes(nodes);  // Correctly set the nodes
+    setAllEdges(edges); 
   }, [data, width, height, revealedSections]);
 
   useEffect(() => {
